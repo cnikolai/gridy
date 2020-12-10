@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="Gridy-name-large-green" translatesAutoresizingMaskIntoConstraints="NO" id="8zI-Gd-mmW">
+                                <rect key="frame" x="41" y="71" width="330" height="160"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Challenge Yourself With A Photo Puzzle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIm-Ha-DAS">
+                                <rect key="frame" x="56" y="465" width="303" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="4rA-E0-dc9">
+                                <rect key="frame" x="30" y="515.5" width="354" height="316.5"/>
+                                <subviews>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aDX-Kn-DIu">
+                                        <rect key="frame" x="0.0" y="0.0" width="354" height="128"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="fQx-AL-jRd">
+                                                <rect key="frame" x="0.0" y="0.0" width="354" height="128"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Gridy-name-small-grey" translatesAutoresizingMaskIntoConstraints="NO" id="iYA-Ih-0pL">
+                                                        <rect key="frame" x="0.0" y="0.0" width="354" height="107.5"/>
+                                                        <color key="backgroundColor" red="0.95408922429999998" green="0.91512435670000003" blue="0.82299590109999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3j-Yu-LGm">
+                                                        <rect key="frame" x="0.0" y="107.5" width="354" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.95408922429999998" green="0.91512435670000003" blue="0.82299590109999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstItem="Q3j-Yu-LGm" firstAttribute="centerX" secondItem="fQx-AL-jRd" secondAttribute="centerX" id="CVM-QM-Y3Z"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.95408922429999998" green="0.91512435670000003" blue="0.82299590109999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="fQx-AL-jRd" firstAttribute="leading" secondItem="aDX-Kn-DIu" secondAttribute="leading" id="1qA-S7-F6K"/>
+                                            <constraint firstAttribute="bottom" secondItem="fQx-AL-jRd" secondAttribute="bottom" id="9l0-NB-z2V"/>
+                                            <constraint firstAttribute="trailing" secondItem="fQx-AL-jRd" secondAttribute="trailing" id="Shq-yT-bGC"/>
+                                            <constraint firstItem="fQx-AL-jRd" firstAttribute="top" secondItem="aDX-Kn-DIu" secondAttribute="top" id="zqj-QG-4P6"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-- OR Load your own --" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5jG-dp-fGN">
+                                        <rect key="frame" x="0.0" y="148" width="354" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ouj-rl-Ueb">
+                                        <rect key="frame" x="0.0" y="188.5" width="354" height="128"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tx9-VD-wVe">
+                                                <rect key="frame" x="0.0" y="0.0" width="167" height="128"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7yU-xh-72v">
+                                                        <rect key="frame" x="0.0" y="0.0" width="167" height="128"/>
+                                                        <subviews>
+                                                            <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Gridy-camera" translatesAutoresizingMaskIntoConstraints="NO" id="Q7x-bU-1kJ">
+                                                                <rect key="frame" x="0.0" y="0.0" width="167" height="107.5"/>
+                                                                <color key="backgroundColor" red="0.95408922429999998" green="0.91512435670000003" blue="0.82299590109999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </imageView>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eF3-bD-NLe" userLabel="Camera">
+                                                                <rect key="frame" x="0.0" y="107.5" width="167" height="20.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" red="0.95408922429999998" green="0.91512435670000003" blue="0.82299590109999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.95408922429999998" green="0.91512435670000003" blue="0.82299590109999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstItem="7yU-xh-72v" firstAttribute="top" secondItem="tx9-VD-wVe" secondAttribute="top" id="7Qm-HD-TOV"/>
+                                                    <constraint firstItem="7yU-xh-72v" firstAttribute="leading" secondItem="tx9-VD-wVe" secondAttribute="leading" id="BS2-Ol-Sw2"/>
+                                                    <constraint firstAttribute="trailing" secondItem="7yU-xh-72v" secondAttribute="trailing" id="CMp-6U-jot"/>
+                                                    <constraint firstAttribute="bottom" secondItem="7yU-xh-72v" secondAttribute="bottom" id="KKD-MZ-lOw"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T4z-7p-M9C">
+                                                <rect key="frame" x="187" y="0.0" width="167" height="128"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ctB-IJ-wYO">
+                                                        <rect key="frame" x="0.0" y="0.0" width="167" height="128"/>
+                                                        <subviews>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Gridy-library" translatesAutoresizingMaskIntoConstraints="NO" id="shZ-dJ-ntU">
+                                                                <rect key="frame" x="0.0" y="0.0" width="167" height="107.5"/>
+                                                                <color key="backgroundColor" red="0.95408922429999998" green="0.91512435670000003" blue="0.82299590109999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </imageView>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo Library" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="46l-3O-PGe">
+                                                                <rect key="frame" x="0.0" y="107.5" width="167" height="20.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" red="0.95408922429999998" green="0.91512435670000003" blue="0.82299590109999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.95408922429999998" green="0.91512435670000003" blue="0.82299590109999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstItem="ctB-IJ-wYO" firstAttribute="leading" secondItem="T4z-7p-M9C" secondAttribute="leading" id="0So-dF-mYH"/>
+                                                    <constraint firstAttribute="bottom" secondItem="ctB-IJ-wYO" secondAttribute="bottom" id="Sy2-fF-wiL"/>
+                                                    <constraint firstItem="ctB-IJ-wYO" firstAttribute="top" secondItem="T4z-7p-M9C" secondAttribute="top" id="anu-uS-yqk"/>
+                                                    <constraint firstAttribute="trailing" secondItem="ctB-IJ-wYO" secondAttribute="trailing" id="kiF-Ax-RNJ"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.95408922433853149" green="0.91512435674667358" blue="0.82299590110778809" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="4rA-E0-dc9" secondAttribute="trailing" constant="30" id="4dC-Nq-I0j"/>
+                            <constraint firstItem="4rA-E0-dc9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="GI9-vQ-Ntr"/>
+                            <constraint firstItem="4rA-E0-dc9" firstAttribute="top" secondItem="xIm-Ha-DAS" secondAttribute="bottom" constant="30" id="QLP-Eb-5Ux"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="4rA-E0-dc9" secondAttribute="bottom" constant="30" id="pWn-91-4DV"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="CameraPicture" destination="Q7x-bU-1kJ" id="kTq-XH-F1W"/>
+                        <outlet property="LocalPicture" destination="iYA-Ih-0pL" id="keE-bu-RSl"/>
+                        <outlet property="PhotoLibraryPicture" destination="shZ-dJ-ntU" id="Pjo-uv-Lvh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="122.54464285714285"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Gridy-camera" width="36" height="28"/>
+        <image name="Gridy-library" width="36" height="28"/>
+        <image name="Gridy-name-large-green" width="330" height="160"/>
+        <image name="Gridy-name-small-grey" width="70" height="34"/>
+    </resources>
+</document>

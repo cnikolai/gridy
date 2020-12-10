@@ -7,12 +7,18 @@
 //
 
 import UIKit
+import Photos
+import AVFoundation
 
-class ViewController: UIViewController {
-
+class PlayfieldViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate  {
+    
+    func configure() {}
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        configure()
     }
 
 
