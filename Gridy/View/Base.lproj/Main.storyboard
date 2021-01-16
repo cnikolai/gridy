@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -156,8 +156,8 @@
                     </view>
                     <connections>
                         <outlet property="CameraPicture" destination="Q7x-bU-1kJ" id="kTq-XH-F1W"/>
-                        <outlet property="LocalPicture" destination="iYA-Ih-0pL" id="keE-bu-RSl"/>
                         <outlet property="PhotoLibraryPicture" destination="shZ-dJ-ntU" id="Pjo-uv-Lvh"/>
+                        <outlet property="PickGridyPicture" destination="iYA-Ih-0pL" id="keE-bu-RSl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

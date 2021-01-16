@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  Gridy
 //
 //  Created by Cynthia Nikolai on 12/8/20.
@@ -10,15 +10,30 @@ import UIKit
 import Photos
 import AVFoundation
 
-class ViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate  {
+class MainViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate  {
 
     var localImages = [UIImage].init()
     var creation = Creation.init()
     var initialImageViewOffset = CGPoint()
+    let imageNames = ["Boats", "Car", "Crocodile", "Park", "TShirts"]
     
-    @IBOutlet weak var LocalPicture: UIImageView!
-    @IBOutlet weak var PhotoLibraryPicture: UIImageView!
-    @IBOutlet weak var CameraPicture: UIImageView!
+    @IBOutlet weak var PickGridyPicture: UIImageView! {
+        didSet {
+            PickGridyPicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(processPicked(image:))))
+            PickGridyPicture.isUserInteractionEnabled = true
+        }
+    }
+    @IBOutlet weak var PhotoLibraryPicture: UIImageView! {
+    didSet {
+       PhotoLibraryPicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(processPicked(image:))))
+       PhotoLibraryPicture.isUserInteractionEnabled = true    }
+    }
+    @IBOutlet weak var CameraPicture: UIImageView!{
+    didSet {
+       CameraPicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(processPicked(image:))))
+       CameraPicture.isUserInteractionEnabled = true
+    }
+    }
     
     func displayCamera() {
         let sourceType = UIImagePickerController.SourceType.camera
@@ -119,7 +134,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
 
     func collectLocalImageSet() {
         localImages.removeAll()
-        let imageNames = ["Boats", "Car", "Crocodile", "Park", "TShirts"]
+        
 
         for name in imageNames {
             if let image = UIImage.init(named: name) {
@@ -128,25 +143,30 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         }
     }
     
-    func processPicked(image: UIImage?) {
+    @objc func processPicked(image: UIImage?) {
          if let newImage = image {
              creation.image = newImage
              //LocalPicture.image = creation.image
-             animateImageChange()
+             //animateImageChange()
          }
+         else {
+            let imageName = imageNames.shuffled().first!
+            creation.image = UIImage(named: imageName)!
+        }
+        PresentImageEditorViewController()
      }
-     
-     func animateImageChange() {
-         UIView.transition(with: self.LocalPicture, duration: 0.4, options: .transitionCrossDissolve, animations: {
-             self.LocalPicture.image = self.creation.image
-         }, completion: nil)
-     }
+
+//     func animateImageChange() {
+//         UIView.transition(with: self.PickGridyPicture, duration: 0.4, options: .transitionCrossDissolve, animations: {
+//             self.PickGridyPicture.image = self.creation.image
+//         }, completion: nil)
+//     }
     
-    func displayImagePickingOptions() {
+    func PresentImageEditorViewController() {
         let storyboard = UIStoryboard(name: "ImageEditor", bundle: nil)
         
         let viewController = storyboard.instantiateViewController(withIdentifier: "ImageEditorViewController") as! ImageEditorViewController
-        viewController.image = UIImage.init(named: "Car")!
+        viewController.creation = creation
         present(viewController, animated: true)
         
 //        let alertController = UIAlertController(title: "Choose image", message: nil, preferredStyle: .actionSheet)
@@ -192,73 +212,73 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
            collectLocalImageSet()
 
            // apply creation data to the views
-           LocalPicture.image = creation.image
+           //PickGridyPicture.image = creation.image
            
-           LocalPicture.isUserInteractionEnabled = true
+           //PickGridyPicture.isUserInteractionEnabled = true
 
-           // create tap gesture recognizer
-           let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(changeImage(_:)))
-           tapGestureRecognizer.delegate = self
-           LocalPicture.addGestureRecognizer(tapGestureRecognizer)
-           
-           let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveImageView(_:)))
-           panGestureRecognizer.delegate = self
-           LocalPicture.addGestureRecognizer(panGestureRecognizer)
-           
-           let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(rotateImageView(_:)))
-           rotationGestureRecognizer.delegate = self
-           LocalPicture.addGestureRecognizer(rotationGestureRecognizer)
-           
-           let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(scaleImageView(_:)))
-           pinchGestureRecognizer.delegate = self
-           LocalPicture.addGestureRecognizer(pinchGestureRecognizer)
+//           // create tap gesture recognizer
+//           let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(changeImage(_:)))
+//           tapGestureRecognizer.delegate = self
+//           PickGridyPicture.addGestureRecognizer(tapGestureRecognizer)
+//
+//           let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveImageView(_:)))
+//           panGestureRecognizer.delegate = self
+//           PickGridyPicture.addGestureRecognizer(panGestureRecognizer)
+//
+//           let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(rotateImageView(_:)))
+//           rotationGestureRecognizer.delegate = self
+//           PickGridyPicture.addGestureRecognizer(rotationGestureRecognizer)
+//
+//           let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(scaleImageView(_:)))
+//           pinchGestureRecognizer.delegate = self
+//           PickGridyPicture.addGestureRecognizer(pinchGestureRecognizer)
        }
        
-    @objc func changeImage(_ sender: UITapGestureRecognizer) {
-        displayImagePickingOptions()
-    }
-    
-       @objc func moveImageView(_ sender: UIPanGestureRecognizer) {
-           let translation = sender.translation(in: LocalPicture.superview)
-           
-           if sender.state == .began {
-               initialImageViewOffset = LocalPicture.frame.origin
-           }
-           
-           let position = CGPoint(x: translation.x + initialImageViewOffset.x - LocalPicture.frame.origin.x, y: translation.y + initialImageViewOffset.y - LocalPicture.frame.origin.y)
-           
-           LocalPicture.transform = LocalPicture.transform.translatedBy(x: position.x, y: position.y)
-       }
+//    @objc func changeImage(_ sender: UITapGestureRecognizer) {
+//        displayImagePickingOptions(PickedImage: UIImage)
+//    }
+//
+//       @objc func moveImageView(_ sender: UIPanGestureRecognizer) {
+//           let translation = sender.translation(in: PickGridyPicture.superview)
+//
+//           if sender.state == .began {
+//               initialImageViewOffset = PickGridyPicture.frame.origin
+//           }
+//
+//           let position = CGPoint(x: translation.x + initialImageViewOffset.x - PickGridyPicture.frame.origin.x, y: translation.y + initialImageViewOffset.y - PickGridyPicture.frame.origin.y)
+//
+//           PickGridyPicture.transform = PickGridyPicture.transform.translatedBy(x: position.x, y: position.y)
+//       }
+//
+//       @objc func rotateImageView(_ sender: UIRotationGestureRecognizer) {
+//           PickGridyPicture.transform = PickGridyPicture.transform.rotated(by: sender.rotation)
+//           sender.rotation = 0
+//       }
+//
+//       @objc func scaleImageView(_ sender: UIPinchGestureRecognizer) {
+//           PickGridyPicture.transform = PickGridyPicture.transform.scaledBy(x: sender.scale, y: sender.scale)
+//           sender.scale = 1
+//       }
        
-       @objc func rotateImageView(_ sender: UIRotationGestureRecognizer) {
-           LocalPicture.transform = LocalPicture.transform.rotated(by: sender.rotation)
-           sender.rotation = 0
-       }
-       
-       @objc func scaleImageView(_ sender: UIPinchGestureRecognizer) {
-           LocalPicture.transform = LocalPicture.transform.scaledBy(x: sender.scale, y: sender.scale)
-           sender.scale = 1
-       }
-       
-       func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-                              shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer)
-           -> Bool {
-               
-               // simultaneous gesture recognition will only be supported for LocalPicture
-               if gestureRecognizer.view != LocalPicture {
-                   return false
-               }
-               
-               // neither of the recognized gestures should not be tap gesture
-               if gestureRecognizer is UITapGestureRecognizer
-                   || otherGestureRecognizer is UITapGestureRecognizer
-                   || gestureRecognizer is UIPanGestureRecognizer
-                   || otherGestureRecognizer is UIPanGestureRecognizer {
-                   return false
-               }
-               
-               return true
-       }
+//       func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+//                              shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer)
+//           -> Bool {
+//
+//               // simultaneous gesture recognition will only be supported for LocalPicture
+//               if gestureRecognizer.view != PickGridyPicture {
+//                   return false
+//               }
+//
+//               // neither of the recognized gestures should not be tap gesture
+//               if gestureRecognizer is UITapGestureRecognizer
+//                   || otherGestureRecognizer is UITapGestureRecognizer
+//                   || gestureRecognizer is UIPanGestureRecognizer
+//                   || otherGestureRecognizer is UIPanGestureRecognizer {
+//                   return false
+//               }
+//
+//               return true
+//       }
 
     
     override func viewDidLoad() {

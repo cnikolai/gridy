@@ -12,7 +12,7 @@ import AVFoundation
 
 class ImageEditorViewController: UIViewController  {
 
-    var image = UIImage.init(named: "Car")!
+    var creation:Creation!
     var topCellItems: [String] = [
         "Boats",
         "Car",
@@ -21,21 +21,25 @@ class ImageEditorViewController: UIViewController  {
         "TShirts"
     ]
     
+    
+    @IBOutlet weak var unsolvedPuzzle: UICollectionView!
+    
     func configure() {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         
-        let collection = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
-        collection.backgroundColor = .white
-        collection.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "CELL")
-        collection.dragDelegate = self as? UICollectionViewDragDelegate
-        collection.dropDelegate = self as? UICollectionViewDropDelegate
-        collection.dragInteractionEnabled = true
-        collection.dataSource = self as? UICollectionViewDataSource
-        collection.delegate = self as? UICollectionViewDelegate
-        collection.contentInset = UIEdgeInsets(top:4, left:4,bottom:4,right:4)
-        view.addSubview(collection)
+        //let unsolvedPuzzle = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
+        unsolvedPuzzle.collectionViewLayout = layout
+        unsolvedPuzzle.backgroundColor = .white
+        unsolvedPuzzle.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "CELL")
+        unsolvedPuzzle.dragDelegate = self as UICollectionViewDragDelegate
+        unsolvedPuzzle.dropDelegate = self as UICollectionViewDropDelegate
+        unsolvedPuzzle.dragInteractionEnabled = true
+        unsolvedPuzzle.dataSource = self as UICollectionViewDataSource
+        unsolvedPuzzle.delegate = self as UICollectionViewDelegate
+        unsolvedPuzzle.contentInset = UIEdgeInsets(top:4, left:4,bottom:4,right:4)
+        view.addSubview(unsolvedPuzzle)
     }
     
     override func viewDidLoad() {
