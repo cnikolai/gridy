@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -16,38 +15,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Adjust the Puzzle Image: Zoom, Rotate, Reposition" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nD3-gU-XCc">
-                                <rect key="frame" x="124" y="90" width="192" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="Adjust the Puzzle Image: Zoom, Rotate, Reposition" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nD3-gU-XCc">
+                                <rect key="frame" x="132" y="74" width="150" height="61"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="Msv-5p-Ysz"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ogn-G5-LA3">
-                                <rect key="frame" x="87" y="194" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UuX-CR-qmy">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="5D8-Fu-mVz">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="UmP-rL-eh1">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </collectionViewCellContentView>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iei-L9-PSN">
-                                <rect key="frame" x="155" y="418" width="105" height="74"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iei-L9-PSN">
+                                <rect key="frame" x="155" y="445" width="105" height="50"/>
                                 <color key="backgroundColor" red="0.02617239021" green="0.74694126839999997" blue="0.72039812800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="YAT-9L-k0x"/>
+                                    <constraint firstAttribute="width" constant="105" id="nRg-XU-bnc"/>
+                                </constraints>
                                 <state key="normal" title="Start">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -57,12 +40,27 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="252" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" translatesAutoresizingMaskIntoConstraints="NO" id="HFU-ei-FH7" userLabel="Unsolved Puzzle">
+                                <rect key="frame" x="87" y="170" width="240" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="664-l1-ow1"/>
+                                    <constraint firstAttribute="width" constant="240" id="vI5-X6-OYG"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="nD3-gU-XCc" firstAttribute="top" secondItem="T1y-rG-cwq" secondAttribute="top" constant="30" id="25b-7j-xuX"/>
+                            <constraint firstItem="nD3-gU-XCc" firstAttribute="centerX" secondItem="ZCd-cu-SkI" secondAttribute="centerX" id="E7w-Th-Sfv"/>
+                            <constraint firstItem="HFU-ei-FH7" firstAttribute="top" secondItem="nD3-gU-XCc" secondAttribute="bottom" constant="35" id="Yyz-IB-cpq"/>
+                            <constraint firstItem="Iei-L9-PSN" firstAttribute="top" secondItem="HFU-ei-FH7" secondAttribute="bottom" constant="35" id="lYi-Nc-45h"/>
+                            <constraint firstItem="Iei-L9-PSN" firstAttribute="centerX" secondItem="ZCd-cu-SkI" secondAttribute="centerX" id="t5m-vP-SZI"/>
+                            <constraint firstItem="HFU-ei-FH7" firstAttribute="centerX" secondItem="ZCd-cu-SkI" secondAttribute="centerX" id="vfl-ee-H55"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="T1y-rG-cwq"/>
                     </view>
                     <connections>
-                        <outlet property="unsolvedPuzzle" destination="ogn-G5-LA3" id="yFG-HA-XZW"/>
+                        <outlet property="unsolvedPuzzle" destination="HFU-ei-FH7" id="xjA-sE-9hA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8kx-T3-rKC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

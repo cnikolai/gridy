@@ -153,7 +153,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
             let imageName = imageNames.shuffled().first!
             creation.image = UIImage(named: imageName)!
         }
-        PresentImageEditorViewController()
+        PresentImageChooserViewController()
      }
 
 //     func animateImageChange() {
@@ -205,6 +205,50 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
 //            // code to execute after the controller finished presenting
 //        }
     }
+
+    func PresentImageChooserViewController() {
+            let storyboard = UIStoryboard(name: "ImageChooser", bundle: nil)
+            
+            let viewController = storyboard.instantiateViewController(withIdentifier: "ImageChooserViewController") as! ImageChooserViewController
+            viewController.creation = creation
+            present(viewController, animated: true)
+            
+    //        let alertController = UIAlertController(title: "Choose image", message: nil, preferredStyle: .actionSheet)
+    //
+    //        // create camera action
+    //        let cameraAction = UIAlertAction(title: "Take photo", style: .default) { (action) in
+    //            self.displayCamera()
+    //        }
+    //
+    //        // add camera action to alert controller
+    //        alertController.addAction(cameraAction)
+    //
+    //        // create library action
+    //        let libraryAction = UIAlertAction(title: "Library pick", style: .default) { (action) in
+    //            self.displayLibrary()
+    //        }
+    //
+    //        // add library action to alert controller
+    //        alertController.addAction(libraryAction)
+    //
+    //        // create random action
+    //        let randomAction = UIAlertAction(title: "Random", style: .default) { (action) in
+    //            self.pickRandom()
+    //        }
+    //
+    //        // add random action to alert controller
+    //        alertController.addAction(randomAction)
+    //
+    //        // create cancel action
+    //        let canceclAction = UIAlertAction(title: "Cancel", style: .cancel)
+    //
+    //        // add cancel action to alert controller
+    //        alertController.addAction(canceclAction)
+    //
+    //        present(alertController, animated: true) {
+    //            // code to execute after the controller finished presenting
+    //        }
+        }
 
 
     func configure() {
