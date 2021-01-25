@@ -11,11 +11,11 @@
         <scene sceneID="63I-Cs-8cC">
             <objects>
                 <viewController storyboardIdentifier="ImageEditorViewController" id="5lq-FR-l6S" customClass="ImageEditorViewController" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ZCd-cu-SkI">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="ZCd-cu-SkI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JX2-9j-icS" userLabel="Creation Frame">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JX2-9j-icS" userLabel="Creation Frame">
                                 <rect key="frame" x="58" y="168" width="298" height="312"/>
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ijU-ec-kEg">

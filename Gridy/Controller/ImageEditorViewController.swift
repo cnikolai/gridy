@@ -14,13 +14,6 @@ class ImageEditorViewController: UIViewController, UINavigationControllerDelegat
 
     var creation:Creation!
     var initialImageViewOffset = CGPoint()
-    var topCellItems: [String] = [
-        "Boats",
-        "Car",
-        "Crocodile",
-        "Park",
-        "TShirts"
-    ]
     var localImages = [UIImage].init()
 
         
@@ -191,16 +184,28 @@ class ImageEditorViewController: UIViewController, UINavigationControllerDelegat
         // collect images
         collectLocalImageSet()
 
-
-        // set creation data object
-        //creation.colorSwatch = colorSwatches[savedColorSwatchIndex]
+        //self.view.backgroundColor = [UIColor, colorWithPatternImage,[UIImage self.creation.image]];
 
         // apply creation data to the views
         creationImageView.image = creation.image
         creationFrame.backgroundColor = UIColor.yellow
-        //colorLabel.text = creation.colorSwatch.caption
         
         creationImageView.isUserInteractionEnabled = true
+        
+//        let renderer1 = UIGraphicsImageRenderer(size: CGSize(width: 500, height: 500))
+//        let img1 = renderer1.image { ctx in
+//            ctx.cgContext.setStrokeColor(UIColor.red.cgColor)
+//            ctx.cgContext.setLineWidth(3)
+//
+//            ctx.cgContext.move(to: CGPoint(x: 50, y: 450))
+//            ctx.cgContext.addLine(to: CGPoint(x: 250, y: 50))
+//            ctx.cgContext.addLine(to: CGPoint(x: 450, y: 450))
+//            ctx.cgContext.addLine(to: CGPoint(x: 50, y: 450))
+//
+//            let rectangle = CGRect(x: 0, y: 0, width: 512, height: 512)
+//            ctx.cgContext.addRect(rectangle)
+//            ctx.cgContext.drawPath(using: .fillStroke)
+//        }
 
         // create tap gesture recognizer
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(changeImage(_:)))
@@ -284,7 +289,6 @@ class ImageEditorViewController: UIViewController, UINavigationControllerDelegat
     }
     
     func composeCreationImage() -> UIImage{
-        
         UIGraphicsBeginImageContextWithOptions(creationFrame.bounds.size, false, 0)
         creationFrame.drawHierarchy(in: creationFrame.bounds, afterScreenUpdates: true)
         let screenshot = UIGraphicsGetImageFromCurrentImageContext()!
@@ -293,95 +297,49 @@ class ImageEditorViewController: UIViewController, UINavigationControllerDelegat
         return screenshot
     }
     
-    
-    
-//
-//
-//    func configure() {
-////        selectedImageView.backgroundColor = .clear
-////        selectedImageView.layer.borderColor = UIColor.red.cgColor
-////        selectedImageView.layer.borderWidth = 2.0
-////
-////        selectedImageView.image = creation.image
-//        //gridyImageView.image = creation.image
-//        view.addSubview(selectedImageView)
-//
-////        selectedImageView.isUserInteractionEnabled = true
-//
-//      // create tap gesture recognizer
-//      //let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(changeImage(_:)))
-//      //tapGestureRecognizer.delegate = self
-//      //unsolvedPuzzle.addGestureRecognizer(tapGestureRecognizer)
-//
-//      let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveImageView(_:)))
-//      panGestureRecognizer.delegate = self
-//      selectedImageView.addGestureRecognizer(panGestureRecognizer)
-//
-//      let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(rotateImageView(_:)))
-//      rotationGestureRecognizer.delegate = self
-//      selectedImageView.addGestureRecognizer(rotationGestureRecognizer)
-//
-//      let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(scaleImageView(_:)))
-//      pinchGestureRecognizer.delegate = self
-//      selectedImageView.addGestureRecognizer(pinchGestureRecognizer)
-//
-//    }
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        // Do additional setup after loading the view
-//        configure()
-//    }
-//
-//    @objc func moveImageView(_ sender: UIPanGestureRecognizer) {
-//        let translation = sender.translation(in: selectedImageView)
-//
-//        let positionSelectedImageView = CGPoint(x: selectedImageView.center.x + translation.x, y: selectedImageView.center.y + translation.y)
-//
-////        let positionGridyImageView = CGPoint(x: gridyImageView.center.x + translation.x, y: gridyImageView.center.y + translation.y)
-//
-//        if sender.state == .began || sender.state == .changed {
-//            selectedImageView.center = positionSelectedImageView
-//            sender.setTranslation(.zero, in: selectedImageView)
-////            gridyImageView.center = positionGridyImageView
-////            sender.setTranslation(.zero, in: gridyImageView)
-//
-//        }
-//
-//        //selectedImageView.transform = selectedImageView.transform.translatedBy(x: position.x, y: position.y)
-//    }
-//
-//    @objc func rotateImageView(_ sender: UIRotationGestureRecognizer) {
-//        selectedImageView.transform = selectedImageView.transform.rotated(by: sender.rotation)
-//        sender.rotation = 0
-//    }
-//
-//    @objc func scaleImageView(_ sender: UIPinchGestureRecognizer) {
-//        selectedImageView.transform = selectedImageView.transform.scaledBy(x: sender.scale, y: sender.scale)
-//        sender.scale = 1
-//    }
-//
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-//                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer)
-//        -> Bool {
-//
-//            // simultaneous gesture recognition will only be supported for LocalPicture
-//            if gestureRecognizer.view != selectedImageView {
-//                return false
-//            }
-//
-//            // neither of the recognized gestures should not be tap gesture
-//            if gestureRecognizer is UITapGestureRecognizer
-//                || otherGestureRecognizer is UITapGestureRecognizer
-//                || gestureRecognizer is UIPanGestureRecognizer
-//                || otherGestureRecognizer is UIPanGestureRecognizer {
-//                return false
-//            }
-//
-//            return true
-//    }
-//
    @objc func changeImage(_ sender: UITapGestureRecognizer) {
        displayImagePickingOptions()
    }
+}
+
+class GridView: UIView {
+
+    var numberOfColumns: Int = 4
+    var numberOfRows: Int = 4
+    var lineWidth: CGFloat = 1.0
+    var lineColor: UIColor = UIColor.red
+
+    override func draw(_ rect: CGRect) {
+        if let context = UIGraphicsGetCurrentContext() {
+
+            context.setLineWidth(lineWidth)
+            context.setStrokeColor(UIColor.white.cgColor)
+
+            let columnWidth = Int(rect.width) / (numberOfColumns + 1)
+            for i in 1...numberOfColumns {
+                var startPoint = CGPoint.zero
+                var endPoint = CGPoint.zero
+                startPoint.x = CGFloat(columnWidth * i)
+                startPoint.y = 0.0
+                endPoint.x = startPoint.x
+                endPoint.y = frame.size.height
+                context.move(to: CGPoint(x: startPoint.x, y: startPoint.y))
+                context.addLine(to: CGPoint(x: endPoint.x, y: endPoint.y))
+                context.strokePath()
+            }
+
+            let rowHeight = Int(rect.height) / (numberOfRows + 1)
+            for j in 1...numberOfRows {
+                var startPoint = CGPoint.zero
+                var endPoint = CGPoint.zero
+                startPoint.x = 0.0
+                startPoint.y = CGFloat(rowHeight * j)
+                endPoint.x = frame.size.width
+                endPoint.y = startPoint.y
+                context.move(to: CGPoint(x: startPoint.x, y: startPoint.y))
+                context.addLine(to: CGPoint(x: endPoint.x, y: endPoint.y))
+                context.strokePath()
+            }
+        }
+    }
 }
