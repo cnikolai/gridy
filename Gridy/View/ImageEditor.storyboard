@@ -15,6 +15,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JX2-9j-icS" userLabel="Creation Frame">
+                                <rect key="frame" x="58" y="168" width="298" height="312"/>
+                                <subviews>
+                                    <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ijU-ec-kEg">
+                                        <rect key="frame" x="10" y="10" width="278" height="292"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </containerView>
+                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" image="FrameIT-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="btU-jH-PfA" userLabel="Unsolved Puzzle image View">
+                                        <rect key="frame" x="0.0" y="0.0" width="298" height="312"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <gestureRecognizers/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.94988268610000004" green="0.77392262219999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="312" id="3jI-kI-HCg" userLabel="height = 230"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="230" id="7L0-Zg-tca"/>
+                                    <constraint firstAttribute="width" constant="298" id="OVp-Dp-W8T" userLabel="width = 230"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="230" id="hOX-tR-Pjh"/>
+                                </constraints>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="Adjust the Puzzle Image: Zoom, Rotate, Reposition" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nD3-gU-XCc">
                                 <rect key="frame" x="132" y="74" width="150" height="61"/>
                                 <constraints>
@@ -25,7 +47,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iei-L9-PSN">
-                                <rect key="frame" x="155" y="445" width="105" height="50"/>
+                                <rect key="frame" x="154.5" y="537" width="105" height="50"/>
                                 <color key="backgroundColor" red="0.02617239021" green="0.74694126839999997" blue="0.72039812800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="YAT-9L-k0x"/>
@@ -40,27 +62,22 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="252" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" translatesAutoresizingMaskIntoConstraints="NO" id="HFU-ei-FH7" userLabel="Unsolved Puzzle">
-                                <rect key="frame" x="87" y="170" width="240" height="240"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="240" id="664-l1-ow1"/>
-                                    <constraint firstAttribute="width" constant="240" id="vI5-X6-OYG"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="nD3-gU-XCc" firstAttribute="top" secondItem="T1y-rG-cwq" secondAttribute="top" constant="30" id="25b-7j-xuX"/>
                             <constraint firstItem="nD3-gU-XCc" firstAttribute="centerX" secondItem="ZCd-cu-SkI" secondAttribute="centerX" id="E7w-Th-Sfv"/>
-                            <constraint firstItem="HFU-ei-FH7" firstAttribute="top" secondItem="nD3-gU-XCc" secondAttribute="bottom" constant="35" id="Yyz-IB-cpq"/>
-                            <constraint firstItem="Iei-L9-PSN" firstAttribute="top" secondItem="HFU-ei-FH7" secondAttribute="bottom" constant="35" id="lYi-Nc-45h"/>
+                            <constraint firstItem="T1y-rG-cwq" firstAttribute="trailing" secondItem="JX2-9j-icS" secondAttribute="trailing" constant="58" id="EEI-pu-6H9"/>
+                            <constraint firstItem="JX2-9j-icS" firstAttribute="leading" secondItem="T1y-rG-cwq" secondAttribute="leading" constant="58" id="J3d-Ng-jio"/>
+                            <constraint firstItem="JX2-9j-icS" firstAttribute="top" secondItem="nD3-gU-XCc" secondAttribute="bottom" constant="33" id="XVP-EQ-71A"/>
+                            <constraint firstItem="Iei-L9-PSN" firstAttribute="top" secondItem="JX2-9j-icS" secondAttribute="bottom" constant="57" id="lqO-Oq-74Z"/>
                             <constraint firstItem="Iei-L9-PSN" firstAttribute="centerX" secondItem="ZCd-cu-SkI" secondAttribute="centerX" id="t5m-vP-SZI"/>
-                            <constraint firstItem="HFU-ei-FH7" firstAttribute="centerX" secondItem="ZCd-cu-SkI" secondAttribute="centerX" id="vfl-ee-H55"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="T1y-rG-cwq"/>
                     </view>
                     <connections>
-                        <outlet property="unsolvedPuzzle" destination="HFU-ei-FH7" id="xjA-sE-9hA"/>
+                        <outlet property="creationFrame" destination="JX2-9j-icS" id="PxI-Uy-dKH"/>
+                        <outlet property="creationImageView" destination="btU-jH-PfA" id="VtE-zL-4lm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8kx-T3-rKC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -68,4 +85,7 @@
             <point key="canvasLocation" x="-110.14492753623189" y="0.6696428571428571"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="FrameIT-placeholder" width="270" height="270"/>
+    </resources>
 </document>
