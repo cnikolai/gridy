@@ -18,6 +18,8 @@
 		3767052D257FC3EB00B5E9A2 /* Creation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3767052C257FC3EB00B5E9A2 /* Creation.swift */; };
 		37670533257FE2B900B5E9A2 /* PlayfieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37670531257FE2B900B5E9A2 /* PlayfieldViewController.swift */; };
 		37670534257FE2B900B5E9A2 /* ImageEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37670532257FE2B900B5E9A2 /* ImageEditorViewController.swift */; };
+		376ED34025C96C5D003578B8 /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376ED33F25C96C5D003578B8 /* Puzzle.swift */; };
+		376ED34225C96CBB003578B8 /* PuzzleImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376ED34125C96CBB003578B8 /* PuzzleImageCell.swift */; };
 		37FAC71525B295B30069C1C8 /* ImageChooser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37FAC71425B295B30069C1C8 /* ImageChooser.storyboard */; };
 		37FAC71725B295FD0069C1C8 /* ImageChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAC71625B295FD0069C1C8 /* ImageChooserViewController.swift */; };
 /* End PBXBuildFile section */
@@ -36,6 +38,8 @@
 		3767052C257FC3EB00B5E9A2 /* Creation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Creation.swift; sourceTree = "<group>"; };
 		37670531257FE2B900B5E9A2 /* PlayfieldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayfieldViewController.swift; sourceTree = "<group>"; };
 		37670532257FE2B900B5E9A2 /* ImageEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEditorViewController.swift; sourceTree = "<group>"; };
+		376ED33F25C96C5D003578B8 /* Puzzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle.swift; sourceTree = "<group>"; };
+		376ED34125C96CBB003578B8 /* PuzzleImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleImageCell.swift; sourceTree = "<group>"; };
 		37FAC71425B295B30069C1C8 /* ImageChooser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImageChooser.storyboard; sourceTree = "<group>"; };
 		37FAC71625B295FD0069C1C8 /* ImageChooserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageChooserViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,6 +90,8 @@
 				37670504257FA9A400B5E9A2 /* LaunchScreen.storyboard */,
 				376704F9257FA9A200B5E9A2 /* AppDelegate.swift */,
 				376704FB257FA9A200B5E9A2 /* SceneDelegate.swift */,
+				376ED33F25C96C5D003578B8 /* Puzzle.swift */,
+				376ED34125C96CBB003578B8 /* PuzzleImageCell.swift */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -194,7 +200,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				376ED34225C96CBB003578B8 /* PuzzleImageCell.swift in Sources */,
 				376704FE257FA9A200B5E9A2 /* MainViewController.swift in Sources */,
+				376ED34025C96C5D003578B8 /* Puzzle.swift in Sources */,
 				376704FA257FA9A200B5E9A2 /* AppDelegate.swift in Sources */,
 				3767052D257FC3EB00B5E9A2 /* Creation.swift in Sources */,
 				37670534257FE2B900B5E9A2 /* ImageEditorViewController.swift in Sources */,
