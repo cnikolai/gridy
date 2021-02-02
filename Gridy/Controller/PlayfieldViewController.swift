@@ -67,10 +67,20 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configure()
     }
     
     @objc func tappedHelpButton() {
         helperDelegate?.showHelp()
+    }
+    
+    func configure() {
+        // apply creation data to the views
+//        creation.image = creation.image
+//        creationFrame.backgroundColor = UIColor.yellow
+//
+//        creationImageView.isUserInteractionEnabled = true
     }
 }
 

@@ -14,13 +14,13 @@ class GridView: UIView {
     var numberOfColumns: Int = 4
     var numberOfRows: Int = 4
     var lineWidth: CGFloat = 1.0
-    var lineColor: UIColor = UIColor.red
+    var lineColor: UIColor = UIColor.gray
 
     override func draw(_ rect: CGRect) {
         if let context = UIGraphicsGetCurrentContext() {
 
             context.setLineWidth(lineWidth)
-            context.setStrokeColor(UIColor.red.cgColor)
+            context.setStrokeColor(UIColor.gray.cgColor)
 
             let columnWidth = Int(rect.width) / (numberOfColumns + 1)
             for i in 1...numberOfColumns {

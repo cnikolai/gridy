@@ -70,7 +70,7 @@ class ImageEditorViewController: UIViewController, UINavigationControllerDelegat
 
             let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
 
-            let noPermissionMessage = "Looks like FrameIT have access to your camera:( Please use Setting app on your device to permit FrameIT accessing your camera"
+            let noPermissionMessage = "Looks like Gridy doesn't have access to your camera:( Please use Setting app on your device to permit Gridy to access your camera"
 
             switch status {
             case .notDetermined:
@@ -100,7 +100,7 @@ class ImageEditorViewController: UIViewController, UINavigationControllerDelegat
         if UIImagePickerController.isSourceTypeAvailable(sourceType) {
 
             let status = PHPhotoLibrary.authorizationStatus()
-            let noPermissionMessage = "Looks like FrameIT have access to your photos:( Please use Setting app on your device to permit FrameIT accessing your library"
+            let noPermissionMessage = "Looks like Gridy doesn't have access to your photos:( Please use Setting app on your device to permit Gridy to access your library"
 
             switch status {
             case .notDetermined:
@@ -261,23 +261,8 @@ class ImageEditorViewController: UIViewController, UINavigationControllerDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
 
         configure()
-    }
-    
-    func displaySharingOptions() {
-        // define content to share
-        let note = "I Framed IT!"
-        let image = composeCreationImage()
-        let items = [image as Any, note as Any]
-        
-        // create activity view controller
-        let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = view // so that iPads won't crash
-        
-        // present the view controller
-        present(activityViewController, animated: true, completion: nil)
     }
     
     func composeCreationImage() -> UIImage{
