@@ -57,6 +57,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
                 self.presentImagePicker(sourceType: sourceType)
             case .denied, .restricted:
                 self.troubleAlert(message: noPermissionMessage)
+            @unknown default:
+                break
             }
         }
         else {
@@ -85,6 +87,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
                 self.presentImagePicker(sourceType: sourceType)
             case .denied, .restricted:
                 self.troubleAlert(message: noPermissionMessage)
+            default:
+                break
             }
         }
         else {
@@ -155,12 +159,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         }
         PresentImageChooserViewController()
      }
-
-//     func animateImageChange() {
-//         UIView.transition(with: self.PickGridyPicture, duration: 0.4, options: .transitionCrossDissolve, animations: {
-//             self.PickGridyPicture.image = self.creation.image
-//         }, completion: nil)
-//     }
     
     func PresentImageEditorViewController() {
         let storyboard = UIStoryboard(name: "ImageEditor", bundle: nil)
@@ -168,42 +166,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         let viewController = storyboard.instantiateViewController(withIdentifier: "ImageEditorViewController") as! ImageEditorViewController
         viewController.creation = creation
         present(viewController, animated: true)
-        
-//        let alertController = UIAlertController(title: "Choose image", message: nil, preferredStyle: .actionSheet)
-//
-//        // create camera action
-//        let cameraAction = UIAlertAction(title: "Take photo", style: .default) { (action) in
-//            self.displayCamera()
-//        }
-//
-//        // add camera action to alert controller
-//        alertController.addAction(cameraAction)
-//
-//        // create library action
-//        let libraryAction = UIAlertAction(title: "Library pick", style: .default) { (action) in
-//            self.displayLibrary()
-//        }
-//
-//        // add library action to alert controller
-//        alertController.addAction(libraryAction)
-//
-//        // create random action
-//        let randomAction = UIAlertAction(title: "Random", style: .default) { (action) in
-//            self.pickRandom()
-//        }
-//
-//        // add random action to alert controller
-//        alertController.addAction(randomAction)
-//
-//        // create cancel action
-//        let canceclAction = UIAlertAction(title: "Cancel", style: .cancel)
-//
-//        // add cancel action to alert controller
-//        alertController.addAction(canceclAction)
-//
-//        present(alertController, animated: true) {
-//            // code to execute after the controller finished presenting
-//        }
     }
 
     func PresentImageChooserViewController() {
@@ -212,126 +174,18 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
             let viewController = storyboard.instantiateViewController(withIdentifier: "ImageChooserViewController") as! ImageChooserViewController
             viewController.creation = creation
             present(viewController, animated: true)
-            
-    //        let alertController = UIAlertController(title: "Choose image", message: nil, preferredStyle: .actionSheet)
-    //
-    //        // create camera action
-    //        let cameraAction = UIAlertAction(title: "Take photo", style: .default) { (action) in
-    //            self.displayCamera()
-    //        }
-    //
-    //        // add camera action to alert controller
-    //        alertController.addAction(cameraAction)
-    //
-    //        // create library action
-    //        let libraryAction = UIAlertAction(title: "Library pick", style: .default) { (action) in
-    //            self.displayLibrary()
-    //        }
-    //
-    //        // add library action to alert controller
-    //        alertController.addAction(libraryAction)
-    //
-    //        // create random action
-    //        let randomAction = UIAlertAction(title: "Random", style: .default) { (action) in
-    //            self.pickRandom()
-    //        }
-    //
-    //        // add random action to alert controller
-    //        alertController.addAction(randomAction)
-    //
-    //        // create cancel action
-    //        let canceclAction = UIAlertAction(title: "Cancel", style: .cancel)
-    //
-    //        // add cancel action to alert controller
-    //        alertController.addAction(canceclAction)
-    //
-    //        present(alertController, animated: true) {
-    //            // code to execute after the controller finished presenting
-    //        }
         }
 
 
     func configure() {
            // collect images
            collectLocalImageSet()
-
-           // apply creation data to the views
-           //PickGridyPicture.image = creation.image
-           
-           //PickGridyPicture.isUserInteractionEnabled = true
-
-//           // create tap gesture recognizer
-//           let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(changeImage(_:)))
-//           tapGestureRecognizer.delegate = self
-//           PickGridyPicture.addGestureRecognizer(tapGestureRecognizer)
-//
-//           let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveImageView(_:)))
-//           panGestureRecognizer.delegate = self
-//           PickGridyPicture.addGestureRecognizer(panGestureRecognizer)
-//
-//           let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(rotateImageView(_:)))
-//           rotationGestureRecognizer.delegate = self
-//           PickGridyPicture.addGestureRecognizer(rotationGestureRecognizer)
-//
-//           let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(scaleImageView(_:)))
-//           pinchGestureRecognizer.delegate = self
-//           PickGridyPicture.addGestureRecognizer(pinchGestureRecognizer)
        }
-       
-//    @objc func changeImage(_ sender: UITapGestureRecognizer) {
-//        displayImagePickingOptions(PickedImage: UIImage)
-//    }
-//
-//       @objc func moveImageView(_ sender: UIPanGestureRecognizer) {
-//           let translation = sender.translation(in: PickGridyPicture.superview)
-//
-//           if sender.state == .began {
-//               initialImageViewOffset = PickGridyPicture.frame.origin
-//           }
-//
-//           let position = CGPoint(x: translation.x + initialImageViewOffset.x - PickGridyPicture.frame.origin.x, y: translation.y + initialImageViewOffset.y - PickGridyPicture.frame.origin.y)
-//
-//           PickGridyPicture.transform = PickGridyPicture.transform.translatedBy(x: position.x, y: position.y)
-//       }
-//
-//       @objc func rotateImageView(_ sender: UIRotationGestureRecognizer) {
-//           PickGridyPicture.transform = PickGridyPicture.transform.rotated(by: sender.rotation)
-//           sender.rotation = 0
-//       }
-//
-//       @objc func scaleImageView(_ sender: UIPinchGestureRecognizer) {
-//           PickGridyPicture.transform = PickGridyPicture.transform.scaledBy(x: sender.scale, y: sender.scale)
-//           sender.scale = 1
-//       }
-       
-//       func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-//                              shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer)
-//           -> Bool {
-//
-//               // simultaneous gesture recognition will only be supported for LocalPicture
-//               if gestureRecognizer.view != PickGridyPicture {
-//                   return false
-//               }
-//
-//               // neither of the recognized gestures should not be tap gesture
-//               if gestureRecognizer is UITapGestureRecognizer
-//                   || otherGestureRecognizer is UITapGestureRecognizer
-//                   || gestureRecognizer is UIPanGestureRecognizer
-//                   || otherGestureRecognizer is UIPanGestureRecognizer {
-//                   return false
-//               }
-//
-//               return true
-//       }
-
-    
+           
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         configure()
     }
-
-
 }
-

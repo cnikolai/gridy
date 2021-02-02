@@ -10,17 +10,210 @@ import UIKit
 import Photos
 import AVFoundation
 
-class PlayfieldViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate  {
+
+class Puzzle {
+    var piecesImages: [UIImage]
+    var solvedImages: [UIImage]
+    var boardImages: [UIImage] = []
     
-    func configure() {}
+    init(Images: [UIImage]) {
+        self.piecesImages = Images.shuffled()
+        self.solvedImages = Images
+    }
+}
+
+extension UIImage {
+    
+    var topHalf: UIImage? {
+        guard let cgImage = cgImage, let image = cgImage.cropping(to: CGRect(origin: .zero, size: CGSize(width: size.width, height: size.height/2))) else { return nil }
+        return UIImage(cgImage: image, scale: scale, orientation: imageOrientation)
+    }
+    var bottomHalf: UIImage? {
+        guard let cgImage = cgImage, let image = cgImage.cropping(to: CGRect(origin: CGPoint(x: 0,  y: CGFloat(Int(size.height)-Int(size.height/2))), size: CGSize(width: size.width, height: CGFloat(Int(size.height) - Int(size.height/2))))) else { return nil }
+        return UIImage(cgImage: image, scale: scale, orientation: imageOrientation)
+    }
+    var leftHalf: UIImage? {
+        guard let cgImage = cgImage, let image = cgImage.cropping(to: CGRect(origin: .zero, size: CGSize(width: size.width/2, height: size.height))) else { return nil }
+        return UIImage(cgImage: image, scale: scale, orientation: imageOrientation)
+    }
+    var rightHalf: UIImage? {
+        guard let cgImage = cgImage, let image = cgImage.cropping(to: CGRect(origin: CGPoint(x: CGFloat(Int(size.width)-Int((size.width/2))), y: 0), size: CGSize(width: CGFloat(Int(size.width)-Int((size.width/2))), height: size.height)))
+            else { return nil }
+        return UIImage(cgImage: image, scale: scale, orientation: imageOrientation)
+    }
+    var splitedInFourParts: [UIImage] {
+        guard case let topHalf = topHalf,
+              case let bottomHalf = bottomHalf,
+            let topLeft = topHalf?.leftHalf,
+            let topRight = topHalf?.rightHalf,
+            let bottomLeft = bottomHalf?.leftHalf,
+            let bottomRight = bottomHalf?.rightHalf else{ return [] }
+        return [topLeft, topRight, bottomLeft, bottomRight]
+    }
+    var splitedInSixteenParts: [UIImage] {
+        var array = splitedInFourParts.flatMap({$0.splitedInFourParts})
+        // if you need it in reading order you need to swap some image positions
+        array.swapAt(2, 4)
+        array.swapAt(3, 5)
+        array.swapAt(10, 12)
+        array.swapAt(11, 13)
+        
+        return array
+    }
+}
+
+class PuzzleImageCell: UICollectionViewCell {
+    
+    var image: UIImage?
+}
+
+protocol HelperDelegate: class {
+    var constant: Int { get }
+    func showHelp()
+}
+
+extension HelperDelegate {
+    
+    var constant: Int {
+        return 1
+    }
+}
+
+// MARK: - PlayfieldViewController
+
+class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
+
+    var creation = Creation.init()
+  
+    // - create our collection view
+    private lazy var boardCollectionView: UICollectionView = {
+        let collectionView = UICollectionView()
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.dragDelegate = self
+        collectionView.dropDelegate = self
+        return collectionView
+    }()
+    
+    private lazy var piecesCollectionView: UICollectionView = {
+        let collectionView = UICollectionView()
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.dragDelegate = self
+        collectionView.dropDelegate = self
+        return collectionView
+    }()
+    
+    // - split the image into 16 parts
+//    private lazy var puzzleImages: [UIImage] = {
+//        creation.image.splitedInSixteenParts
+//    }()
+    
+    // - when you have the images you would add them to this object
+    // - create our puzzle for this example
+    private lazy var puzzle: Puzzle = {
+        Puzzle.init(Images: creation.image.splitedInSixteenParts)
+    }()
+    
+    weak var helperDelegate: HelperDelegate?
+    
+    // - when clicking on hint button, add hint imageview to subview and when youy click close you will remove it
+    var hintImageView = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        configure()
     }
-
-
+    
+    @objc func tappedHelpButton() {
+        helperDelegate?.showHelp()
+    }
 }
 
+
+// MARK: - UICollectionViewDataSource
+
+extension PlayfieldViewController: UICollectionViewDataSource {
+
+    // number of sections (this usually is 1)
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    // gives you the number of items (this is usually the array count)
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // will return the number of images in the puzzle otherwise return 0
+        if collectionView == piecesCollectionView {
+            return puzzle.piecesImages.count
+        }
+        if collectionView == boardCollectionView {
+            return puzzle.solvedImages.count
+        }
+        return 0
+    }
+
+    // mapping your array at index path . item to a cell(view)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        // create an puzzle image cell and set the image to be the current image
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PuzzleImageCell
+        if collectionView == piecesCollectionView {
+            cell.image = puzzle.piecesImages[indexPath.item]
+        }
+        if collectionView == boardCollectionView {
+            cell.image = puzzle.solvedImages[indexPath.item]
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //when select, want it to be highlighted: come back to this
+    }
+}
+
+// MARK: - UICollectionViewDragDelegate, UICollectionViewDropDelegate
+
+extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionViewDropDelegate, UIDropInteractionDelegate {
+    
+    // the items that start the drag process at an index
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+            // get the image and
+        let image = puzzle.piecesImages[indexPath.item]
+        let itemProvider = NSItemProvider(object: image as UIImage)
+        
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        dragItem.localObject = image
+        return [dragItem]
+    }
+    
+    // what will happen when you drop the item
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        if let destinationIndex = coordinator.destinationIndexPath {
+            if destinationIndex.row >= puzzle.solvedImages.count {
+                return
+            } else if collectionView == boardCollectionView {
+                //move item from one to another
+                //check which collection view dropping it from and append to collectionview
+                let items = coordinator.items
+                
+//                collectionView.performBatchUpdates({
+//                    guard let dragItem = items.first?.dragItem.localObject as? UIImage else { return }
+//
+//                    if dragItem == puzzleImages[coordinator.destinationIndexPath.item]
+//
+//                    ....
+//
+//                }, completion: nil)
+                
+                
+            }
+        }
+    }
+    
+//    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+//        //if the destination index path.row > images count, return forbidden operation (can't drop here anymore )
+//        //else if collection view == board collection view, return move operation with intent to insert into destination index path.
+//        //else forbidden op.
+//        return 
+//    }
+}

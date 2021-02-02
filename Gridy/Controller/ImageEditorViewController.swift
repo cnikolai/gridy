@@ -17,9 +17,14 @@ class ImageEditorViewController: UIViewController, UINavigationControllerDelegat
     var localImages = [UIImage].init()
 
         
-    @IBOutlet weak var creationFrame: UIView!
+    @IBOutlet weak var creationFrame: GridView!
     @IBOutlet weak var creationImageView: UIImageView!
         
+    @IBAction func startPuzzle(_ sender: UIButton) {
+        let image = creation.image
+        processPickedImage(image: image)
+    }
+    
     func displayImagePickingOptions() {
         let alertController = UIAlertController(title: "Choose image", message: nil, preferredStyle: .actionSheet)
 
@@ -80,6 +85,8 @@ class ImageEditorViewController: UIViewController, UINavigationControllerDelegat
                 self.presentImagePicker(sourceType: sourceType)
             case .denied, .restricted:
                 self.troubleAlert(message: noPermissionMessage)
+            default:
+                break
             }
         }
         else {
@@ -108,6 +115,8 @@ class ImageEditorViewController: UIViewController, UINavigationControllerDelegat
                 self.presentImagePicker(sourceType: sourceType)
             case .denied, .restricted:
                 self.troubleAlert(message: noPermissionMessage)
+            default:
+                break
             }
         }
         else {
@@ -300,6 +309,18 @@ class ImageEditorViewController: UIViewController, UINavigationControllerDelegat
    @objc func changeImage(_ sender: UITapGestureRecognizer) {
        displayImagePickingOptions()
    }
+    
+    @objc func processPickedImage(image: UIImage?) {
+        if let newImage = image {
+            creation.image = newImage
+        }
+        
+        let storyboard = UIStoryboard(name: "Playfield", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "PlayfieldViewController") as! PlayfieldViewController
+        viewController.creation = creation
+        present(viewController, animated: true)
+    }
+    
 }
 
 class GridView: UIView {
@@ -313,7 +334,7 @@ class GridView: UIView {
         if let context = UIGraphicsGetCurrentContext() {
 
             context.setLineWidth(lineWidth)
-            context.setStrokeColor(UIColor.white.cgColor)
+            context.setStrokeColor(UIColor.red.cgColor)
 
             let columnWidth = Int(rect.width) / (numberOfColumns + 1)
             for i in 1...numberOfColumns {
