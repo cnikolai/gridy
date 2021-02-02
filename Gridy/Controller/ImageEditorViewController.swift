@@ -193,29 +193,12 @@ class ImageEditorViewController: UIViewController, UINavigationControllerDelegat
         // collect images
         collectLocalImageSet()
 
-        //self.view.backgroundColor = [UIColor, colorWithPatternImage,[UIImage self.creation.image]];
-
         // apply creation data to the views
         creationImageView.image = creation.image
         creationFrame.backgroundColor = UIColor.yellow
         
         creationImageView.isUserInteractionEnabled = true
         
-//        let renderer1 = UIGraphicsImageRenderer(size: CGSize(width: 500, height: 500))
-//        let img1 = renderer1.image { ctx in
-//            ctx.cgContext.setStrokeColor(UIColor.red.cgColor)
-//            ctx.cgContext.setLineWidth(3)
-//
-//            ctx.cgContext.move(to: CGPoint(x: 50, y: 450))
-//            ctx.cgContext.addLine(to: CGPoint(x: 250, y: 50))
-//            ctx.cgContext.addLine(to: CGPoint(x: 450, y: 450))
-//            ctx.cgContext.addLine(to: CGPoint(x: 50, y: 450))
-//
-//            let rectangle = CGRect(x: 0, y: 0, width: 512, height: 512)
-//            ctx.cgContext.addRect(rectangle)
-//            ctx.cgContext.drawPath(using: .fillStroke)
-//        }
-
         // create tap gesture recognizer
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(changeImage(_:)))
         tapGestureRecognizer.delegate = self
@@ -321,46 +304,4 @@ class ImageEditorViewController: UIViewController, UINavigationControllerDelegat
         present(viewController, animated: true)
     }
     
-}
-
-class GridView: UIView {
-
-    var numberOfColumns: Int = 4
-    var numberOfRows: Int = 4
-    var lineWidth: CGFloat = 1.0
-    var lineColor: UIColor = UIColor.red
-
-    override func draw(_ rect: CGRect) {
-        if let context = UIGraphicsGetCurrentContext() {
-
-            context.setLineWidth(lineWidth)
-            context.setStrokeColor(UIColor.red.cgColor)
-
-            let columnWidth = Int(rect.width) / (numberOfColumns + 1)
-            for i in 1...numberOfColumns {
-                var startPoint = CGPoint.zero
-                var endPoint = CGPoint.zero
-                startPoint.x = CGFloat(columnWidth * i)
-                startPoint.y = 0.0
-                endPoint.x = startPoint.x
-                endPoint.y = frame.size.height
-                context.move(to: CGPoint(x: startPoint.x, y: startPoint.y))
-                context.addLine(to: CGPoint(x: endPoint.x, y: endPoint.y))
-                context.strokePath()
-            }
-
-            let rowHeight = Int(rect.height) / (numberOfRows + 1)
-            for j in 1...numberOfRows {
-                var startPoint = CGPoint.zero
-                var endPoint = CGPoint.zero
-                startPoint.x = 0.0
-                startPoint.y = CGFloat(rowHeight * j)
-                endPoint.x = frame.size.width
-                endPoint.y = startPoint.y
-                context.move(to: CGPoint(x: startPoint.x, y: startPoint.y))
-                context.addLine(to: CGPoint(x: endPoint.x, y: endPoint.y))
-                context.strokePath()
-            }
-        }
-    }
 }
