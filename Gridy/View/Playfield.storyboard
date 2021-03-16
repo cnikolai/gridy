@@ -101,6 +101,10 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="Lq8-kx-dv9"/>
                     </view>
+                    <connections>
+                        <outlet property="boardCollectionView" destination="dvK-UQ-QSc" id="L0S-Wl-MJy"/>
+                        <outlet property="piecesCollectionView" destination="oXc-RP-a0g" id="C00-FK-lUx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MET-I3-WI4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

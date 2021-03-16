@@ -6,10 +6,23 @@
 //  Copyright © 2021 Cynthia Nikolai. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class PuzzleImageCell: UICollectionViewCell {
+
+//    var image:UIImage?{
+//        didSet {
+//            imageView.image = image
+//        }
+//    }
+    @IBOutlet weak var imageView: UIImageView!
     
-    var image: UIImage?
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+    
+    func setImage(image:UIImage) {
+        imageView.image = image
+    }
 }

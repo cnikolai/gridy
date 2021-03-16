@@ -25,29 +25,31 @@ extension HelperDelegate {
 // MARK: - PlayfieldViewController
 
 class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
-
+    @IBOutlet weak var piecesCollectionView: UICollectionView!
+    
+    @IBOutlet weak var boardCollectionView: UICollectionView!
     var creation = Creation.init()
   
     // - create our collection view
-    private lazy var boardCollectionView: UICollectionView = {
-        let collectionView = UICollectionView()
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.dragDelegate = self
-        collectionView.dropDelegate = self
-        return collectionView
-    }()
-    
-    private lazy var piecesCollectionView: UICollectionView = {
-        let collectionView = UICollectionView()
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.dragDelegate = self
-        collectionView.dropDelegate = self
-        return collectionView
-    }()
+//    private lazy var boardCollectionView: UICollectionView = {
+//        let collectionView = UICollectionView()
+//
+//        collectionView.dataSource = self
+//        collectionView.delegate = self
+//        collectionView.dragDelegate = self
+//        collectionView.dropDelegate = self
+//        return collectionView
+//    }()
+//
+//    private lazy var piecesCollectionView: UICollectionView = {
+//        let collectionView = UICollectionView()
+//
+//        collectionView.dataSource = self
+//        collectionView.delegate = self
+//        collectionView.dragDelegate = self
+//        collectionView.dropDelegate = self
+//        return collectionView
+//    }()
     
     // - split the image into 16 parts
 //    private lazy var puzzleImages: [UIImage] = {
@@ -81,6 +83,19 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
 //        creationFrame.backgroundColor = UIColor.yellow
 //
 //        creationImageView.isUserInteractionEnabled = true
+        piecesCollectionView.dataSource = self
+        piecesCollectionView.delegate = self
+        piecesCollectionView.dragDelegate = self
+        piecesCollectionView.dropDelegate = self
+        piecesCollectionView.register(PuzzleImageCell.self, forCellWithReuseIdentifier: "cell")
+        
+        boardCollectionView.dataSource = self
+        boardCollectionView.delegate = self
+        boardCollectionView.dragDelegate = self
+        boardCollectionView.dropDelegate = self
+        boardCollectionView.register(PuzzleImageCell.self, forCellWithReuseIdentifier: "cell")
+
+        
     }
 }
 
@@ -111,10 +126,13 @@ extension PlayfieldViewController: UICollectionViewDataSource {
         // create an puzzle image cell and set the image to be the current image
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PuzzleImageCell
         if collectionView == piecesCollectionView {
-            cell.image = puzzle.piecesImages[indexPath.item]
+            //cell.image = puzzle.piecesImages[indexPath.item]
+            cell.setImage(image: puzzle.piecesImages[indexPath.item])
         }
         if collectionView == boardCollectionView {
-            cell.image = puzzle.solvedImages[indexPath.item]
+            //cell.image = puzzle.solvedImages[indexPath.item]
+            cell.setImage(image: puzzle.solvedImages[indexPath.item])
+
         }
         return cell
     }
@@ -148,7 +166,7 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                 //move item from one to another
                 //check which collection view dropping it from and append to collectionview
                 let items = coordinator.items
-                
+                //https://developer.apple.com/documentation/uikit/uicollectionviewdropcoordinator
 //                collectionView.performBatchUpdates({
 //                    guard let dragItem = items.first?.dragItem.localObject as? UIImage else { return }
 //
