@@ -10,19 +10,20 @@ import UIKit
 
 class PuzzleImageCell: UICollectionViewCell {
 
-//    var image:UIImage?{
-//        didSet {
-//            imageView.image = image
-//        }
-//    }
+    var image:UIImage?{
+        didSet {
+            imageView.image = image
+        }
+    }
+    
     @IBOutlet weak var imageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-    }
-    
-    func setImage(image:UIImage) {
-        imageView.image = image
+        
+        isUserInteractionEnabled = true
+        layer.borderWidth = 1.0
+        layer.borderColor = UIColor.gray.cgColor
     }
 }

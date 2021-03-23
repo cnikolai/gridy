@@ -11,51 +11,61 @@ import Foundation
 
 class Puzzle {
     var piecesImages: [UIImage]
-    var solvedImages: [UIImage]
     var boardImages: [UIImage] = []
+
+    let solvedImages: [UIImage]
+    let solvedImage: UIImage
     
-    init(Images: [UIImage]) {
-        self.piecesImages = Images.shuffled()
-        self.solvedImages = Images
+    init(Image: UIImage) {
+        self.solvedImage = Image
+        self.solvedImages = Image.slice(into: 4)
+        self.piecesImages = solvedImages.shuffled()
     }
 }
 
 extension UIImage {
-    
-    var topHalf: UIImage? {
-        guard let cgImage = cgImage, let image = cgImage.cropping(to: CGRect(origin: .zero, size: CGSize(width: size.width, height: size.height/2))) else { return nil }
-        return UIImage(cgImage: image, scale: scale, orientation: imageOrientation)
-    }
-    var bottomHalf: UIImage? {
-        guard let cgImage = cgImage, let image = cgImage.cropping(to: CGRect(origin: CGPoint(x: 0,  y: CGFloat(Int(size.height)-Int(size.height/2))), size: CGSize(width: size.width, height: CGFloat(Int(size.height) - Int(size.height/2))))) else { return nil }
-        return UIImage(cgImage: image, scale: scale, orientation: imageOrientation)
-    }
-    var leftHalf: UIImage? {
-        guard let cgImage = cgImage, let image = cgImage.cropping(to: CGRect(origin: .zero, size: CGSize(width: size.width/2, height: size.height))) else { return nil }
-        return UIImage(cgImage: image, scale: scale, orientation: imageOrientation)
-    }
-    var rightHalf: UIImage? {
-        guard let cgImage = cgImage, let image = cgImage.cropping(to: CGRect(origin: CGPoint(x: CGFloat(Int(size.width)-Int((size.width/2))), y: 0), size: CGSize(width: CGFloat(Int(size.width)-Int((size.width/2))), height: size.height)))
-            else { return nil }
-        return UIImage(cgImage: image, scale: scale, orientation: imageOrientation)
-    }
-    var splitedInFourParts: [UIImage] {
-        guard case let topHalf = topHalf,
-              case let bottomHalf = bottomHalf,
-            let topLeft = topHalf?.leftHalf,
-            let topRight = topHalf?.rightHalf,
-            let bottomLeft = bottomHalf?.leftHalf,
-            let bottomRight = bottomHalf?.rightHalf else{ return [] }
-        return [topLeft, topRight, bottomLeft, bottomRight]
-    }
-    var splitedInSixteenParts: [UIImage] {
-        var array = splitedInFourParts.flatMap({$0.splitedInFourParts})
-        // if you need it in reading order you need to swap some image positions
-        array.swapAt(2, 4)
-        array.swapAt(3, 5)
-        array.swapAt(10, 12)
-        array.swapAt(11, 13)
-        
-        return array
+   
+func slice(into howMany: Int) -> [UIImage] {
+   let width: CGFloat
+   let height: CGFloat
+
+   switch imageOrientation {
+   case .left, .leftMirrored, .right, .rightMirrored:
+       width = size.height
+       height = size.width
+   default:
+       width = size.width
+       height = size.height
+   }
+
+   let tileWidth = Int(width / CGFloat(howMany))
+   let tileHeight = Int(height / CGFloat(howMany))
+
+   let s = Int(scale)
+   var images = [UIImage]()
+   let cg = cgImage!
+
+        var adjustedHeight = tileHeight
+
+        var y = 0
+        for row in 0 ..< howMany {
+            if row == (howMany - 1) {
+                adjustedHeight = Int(height) - y
+            }
+            var adjustedWidth = tileWidth
+            var x = 0
+            for column in 0 ..< howMany {
+                if column == (howMany - 1) {
+                    adjustedWidth = Int(width) - x
+                }
+                let origin = CGPoint(x: x * s, y: y * s)
+                let size = CGSize(width: adjustedWidth * s, height: adjustedHeight * s)
+                let tileCgImage = cg.cropping(to: CGRect(origin: origin, size: size))!
+                images.append(UIImage(cgImage: tileCgImage, scale: scale, orientation: imageOrientation))
+                x += tileWidth
+            }
+            y += tileHeight
+        }
+        return images
     }
 }

@@ -121,7 +121,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
     }
 
     func randomImage() -> UIImage? {
-
         let currentImage = creation.image
 
         if localImages.count > 0 {
@@ -138,8 +137,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
 
     func collectLocalImageSet() {
         localImages.removeAll()
-        
-
         for name in imageNames {
             if let image = UIImage.init(named: name) {
                 localImages.append(image)
