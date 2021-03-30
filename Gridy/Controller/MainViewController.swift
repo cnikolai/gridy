@@ -12,10 +12,7 @@ import AVFoundation
 
 class MainViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate  {
 
-    var localImages = [UIImage].init()
-    var creation = Creation.init()
-    var initialImageViewOffset = CGPoint()
-    let randomImageNames = ["Boats", "Car", "Crocodile", "Park", "TShirts"]
+    // MARK:- outlets
     
     @IBOutlet weak var PickGridyPicture: UIImageView! {
         didSet {
@@ -24,16 +21,33 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         }
     }
     @IBOutlet weak var PhotoLibraryPicture: UIImageView! {
-    didSet {
-        PhotoLibraryPicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(displayLibrary)))
-       PhotoLibraryPicture.isUserInteractionEnabled = true    }
+        didSet {
+            PhotoLibraryPicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(displayLibrary)))
+           PhotoLibraryPicture.isUserInteractionEnabled = true
+        }
     }
     @IBOutlet weak var CameraPicture: UIImageView!{
-    didSet {
-        CameraPicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(displayCamera)))
-       CameraPicture.isUserInteractionEnabled = true
+        didSet {
+            CameraPicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(displayCamera)))
+           CameraPicture.isUserInteractionEnabled = true
+        }
     }
+    
+    // MARK: - local variables
+    
+    var localImages = [UIImage].init()
+    var creation = Creation.init()
+    var initialImageViewOffset = CGPoint()
+    let randomImageNames = ["Boats", "Car", "Crocodile", "Park", "TShirts"]
+    
+    
+    // MARK:- Lifecycle
+       
+    override func viewDidLoad() {
+        super.viewDidLoad()
     }
+    
+    // MARK:- Helper functions
     
     @objc func displayCamera() {
         let sourceType = UIImagePickerController.SourceType.camera
@@ -62,7 +76,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
             }
         }
         else {
-            troubleAlert(message: "Sincere apologies, it looks like we can't access your camera at this time")
+            troubleAlert(message: "Looks like we can't access your camera at this time")
         }
     }
 
@@ -92,7 +106,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
             }
         }
         else {
-            troubleAlert(message: "Sincere apologies, it looks like we can't access your photo library at this time")
+            troubleAlert(message: "Looks like we can't access your photo library at this time")
         }
     }
 
@@ -151,14 +165,4 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         present(viewController, animated: true)
     }
 
-    func configure() {
-           
-       }
-           
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        configure()
-    }
 }
