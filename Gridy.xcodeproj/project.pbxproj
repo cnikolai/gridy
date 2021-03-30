@@ -22,8 +22,6 @@
 		376ED34425C96FF7003578B8 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376ED34325C96FF7003578B8 /* GridView.swift */; };
 		376ED34725C99917003578B8 /* PuzzleImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376ED34525C99917003578B8 /* PuzzleImageCell.swift */; };
 		376ED34825C99917003578B8 /* PuzzleImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 376ED34625C99917003578B8 /* PuzzleImageCell.xib */; };
-		37FAC71525B295B30069C1C8 /* ImageChooser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37FAC71425B295B30069C1C8 /* ImageChooser.storyboard */; };
-		37FAC71725B295FD0069C1C8 /* ImageChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAC71625B295FD0069C1C8 /* ImageChooserViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,8 +42,6 @@
 		376ED34325C96FF7003578B8 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		376ED34525C99917003578B8 /* PuzzleImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleImageCell.swift; sourceTree = "<group>"; };
 		376ED34625C99917003578B8 /* PuzzleImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PuzzleImageCell.xib; sourceTree = "<group>"; };
-		37FAC71425B295B30069C1C8 /* ImageChooser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImageChooser.storyboard; sourceTree = "<group>"; };
-		37FAC71625B295FD0069C1C8 /* ImageChooserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageChooserViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +102,6 @@
 			isa = PBXGroup;
 			children = (
 				37670532257FE2B900B5E9A2 /* ImageEditorViewController.swift */,
-				37FAC71625B295FD0069C1C8 /* ImageChooserViewController.swift */,
 				37670531257FE2B900B5E9A2 /* PlayfieldViewController.swift */,
 				376704FD257FA9A200B5E9A2 /* MainViewController.swift */,
 			);
@@ -118,7 +113,6 @@
 			children = (
 				376704FF257FA9A200B5E9A2 /* Main.storyboard */,
 				37670528257FB10100B5E9A2 /* ImageEditor.storyboard */,
-				37FAC71425B295B30069C1C8 /* ImageChooser.storyboard */,
 				3767052A257FB3EC00B5E9A2 /* Playfield.storyboard */,
 			);
 			path = View;
@@ -193,7 +187,6 @@
 				376ED34825C99917003578B8 /* PuzzleImageCell.xib in Resources */,
 				37670506257FA9A400B5E9A2 /* LaunchScreen.storyboard in Resources */,
 				37670503257FA9A400B5E9A2 /* Assets.xcassets in Resources */,
-				37FAC71525B295B30069C1C8 /* ImageChooser.storyboard in Resources */,
 				3767052B257FB3EC00B5E9A2 /* Playfield.storyboard in Resources */,
 				37670529257FB10100B5E9A2 /* ImageEditor.storyboard in Resources */,
 				37670501257FA9A200B5E9A2 /* Main.storyboard in Resources */,
@@ -212,7 +205,6 @@
 				376704FA257FA9A200B5E9A2 /* AppDelegate.swift in Sources */,
 				3767052D257FC3EB00B5E9A2 /* Creation.swift in Sources */,
 				37670534257FE2B900B5E9A2 /* ImageEditorViewController.swift in Sources */,
-				37FAC71725B295FD0069C1C8 /* ImageChooserViewController.swift in Sources */,
 				37670533257FE2B900B5E9A2 /* PlayfieldViewController.swift in Sources */,
 				376ED34425C96FF7003578B8 /* GridView.swift in Sources */,
 				376704FC257FA9A200B5E9A2 /* SceneDelegate.swift in Sources */,

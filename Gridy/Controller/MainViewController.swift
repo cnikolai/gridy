@@ -15,27 +15,27 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
     var localImages = [UIImage].init()
     var creation = Creation.init()
     var initialImageViewOffset = CGPoint()
-    let imageNames = ["Boats", "Car", "Crocodile", "Park", "TShirts"]
+    let randomImageNames = ["Boats", "Car", "Crocodile", "Park", "TShirts"]
     
     @IBOutlet weak var PickGridyPicture: UIImageView! {
         didSet {
-            PickGridyPicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(processPicked(image:))))
+            PickGridyPicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(processPicked)))
             PickGridyPicture.isUserInteractionEnabled = true
         }
     }
     @IBOutlet weak var PhotoLibraryPicture: UIImageView! {
     didSet {
-       PhotoLibraryPicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(processPicked(image:))))
+        PhotoLibraryPicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(displayLibrary)))
        PhotoLibraryPicture.isUserInteractionEnabled = true    }
     }
     @IBOutlet weak var CameraPicture: UIImageView!{
     didSet {
-       CameraPicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(processPicked(image:))))
+        CameraPicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(displayCamera)))
        CameraPicture.isUserInteractionEnabled = true
     }
     }
     
-    func displayCamera() {
+    @objc func displayCamera() {
         let sourceType = UIImagePickerController.SourceType.camera
 
         if UIImagePickerController.isSourceTypeAvailable(sourceType) {
@@ -66,7 +66,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         }
     }
 
-    func displayLibrary() {
+    @objc func displayLibrary() {
         let sourceType = UIImagePickerController.SourceType.photoLibrary
 
         if UIImagePickerController.isSourceTypeAvailable(sourceType) {
@@ -96,7 +96,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         }
     }
 
-    func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
+    @objc func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
         let imagePicker =  UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = sourceType
@@ -106,7 +106,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         let newImage = info[.originalImage] as? UIImage
-        processPicked(image: newImage)
+        processPickedImage(image: newImage)
     }
 
     func troubleAlert(message: String?) {
@@ -116,11 +116,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         present(alertController, animated: true)
     }
 
-    func pickRandom() {
-        processPicked(image: randomImage())
-    }
-
     func randomImage() -> UIImage? {
+        print("inside randomImage")
         let currentImage = creation.image
 
         if localImages.count > 0 {
@@ -134,28 +131,17 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         }
         return nil
     }
-
-    func collectLocalImageSet() {
-        localImages.removeAll()
-        for name in imageNames {
-            if let image = UIImage.init(named: name) {
-                localImages.append(image)
-            }
-        }
-    }
     
-    @objc func processPicked(image: UIImage?) {
-         if let newImage = image {
-             creation.image = newImage
-             //LocalPicture.image = creation.image
-             //animateImageChange()
-         }
-         else {
-            let imageName = imageNames.shuffled().first!
-            creation.image = UIImage(named: imageName)!
-        }
-        PresentImageChooserViewController()
+    @objc func processPicked() {
+        let imageName = randomImageNames.shuffled().first!
+        creation.image = UIImage(named: imageName)!
+        PresentImageEditorViewController()
      }
+    
+    @objc func processPickedImage(image: UIImage?) {
+        creation.image = image!
+        PresentImageEditorViewController()
+    }
     
     func PresentImageEditorViewController() {
         let storyboard = UIStoryboard(name: "ImageEditor", bundle: nil)
@@ -165,18 +151,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         present(viewController, animated: true)
     }
 
-    func PresentImageChooserViewController() {
-            let storyboard = UIStoryboard(name: "ImageChooser", bundle: nil)
-            
-            let viewController = storyboard.instantiateViewController(withIdentifier: "ImageChooserViewController") as! ImageChooserViewController
-            viewController.creation = creation
-            present(viewController, animated: true)
-        }
-
-
     func configure() {
-           // collect images
-           collectLocalImageSet()
+           
        }
            
     override func viewDidLoad() {
