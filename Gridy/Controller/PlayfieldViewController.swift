@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Photos
-import AVFoundation
 
 extension UIImage {
     convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
@@ -41,6 +39,13 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         self.moves.text = String(describing: 0)
     }
     
+    @IBAction func ShowHint(_ sender: Any) {
+        let popupVC = UIStoryboard(name: "Playfield", bundle: nil).instantiateViewControllerWithIdentifier("sbPopUpID") as! PopupViewController
+        self.addChildViewController(popupVC)
+        popupVC.view.frame = self.view.frame
+        self.view.addSubview(popupVC.view)
+        popupVC.didMoveToParentViewController(self)
+    }
     // MARK: - Local Variables
     
     var creation: Creation!
