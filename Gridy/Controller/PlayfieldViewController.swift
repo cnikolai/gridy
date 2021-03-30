@@ -28,13 +28,20 @@ extension UIImage {
 
 class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
     
-    // MARK:- outlets
+    // MARK:- Outlets
     
     @IBOutlet weak var piecesCollectionView: UICollectionView!
     
     @IBOutlet weak var boardCollectionView: UICollectionView!
     
-    // MARK: - local variables
+    @IBOutlet weak var moves: UILabel!
+    
+    @IBAction func NewGame(_ sender: UIButton) {
+        //puzzle.piecesImages.shuffle()
+        self.moves.text = String(describing: 0)
+    }
+    
+    // MARK: - Local Variables
     
     var creation: Creation!
     private var selectedIndexPath: IndexPath?
@@ -51,11 +58,12 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         UIImage(named: "Gridy-lookup")!
     }()
     
+    private var numMoves:Int = 0
+    
     // MARK:- Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configure()
     }
     
@@ -67,7 +75,7 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         piecesCollectionView.delegate = self
         piecesCollectionView.dragDelegate = self
         piecesCollectionView.dropDelegate = self
-       // piecesCollectionView.register(PuzzleImageCell.self, forCellWithReuseIdentifier: "cell")
+       // piecesCollectionView.register(PuzzleImageCell.self, forCellWithReuseIdentifier: "Cell")
         piecesCollectionView.dragInteractionEnabled = true
 
         
@@ -75,7 +83,7 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         boardCollectionView.delegate = self
         boardCollectionView.dragDelegate = self
         boardCollectionView.dropDelegate = self
-        //boardCollectionView.register(PuzzleImageCell.self, forCellWithReuseIdentifier: "cell")
+        //boardCollectionView.register(PuzzleImageCell.self, forCellWithReuseIdentifier: "Cell")
         boardCollectionView.dragInteractionEnabled = true
 
         let nib = UINib(nibName: "PuzzleImageCell", bundle: nil)
@@ -119,6 +127,10 @@ extension PlayfieldViewController: UICollectionViewDataSource {
         return cell
     }
     
+    func updateNumMoves(numMoves:Int) {
+        self.moves.text = String(describing: numMoves)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //when select, want it to be highlighted: come back to this
     }
@@ -144,19 +156,19 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
     // what will happen when you drop the item
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
         
-        //let destinationIndexPath: IndexPath
-
         if let destinationIndex = coordinator.destinationIndexPath {
             if destinationIndex.row >= puzzle.solvedImages.count {
                 return
             } else if collectionView == boardCollectionView {
                 let item = coordinator.items[0]
                 //let item = puzzleImages[coordinator.destinationIndexPath!.item]
+                print("coordinator proposal operation: ", coordinator.proposal.operation)
 
                 switch coordinator.proposal.operation {
                     //move item from one to another
                     //check which collection view dropping it from and append to collectionview
                 case .move:
+                    print("inside move operation")
                     // - happens in the same collection view
                     if let sourceIndexPath = item.sourceIndexPath {
                         collectionView.performBatchUpdates ({
@@ -167,14 +179,17 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                             collectionView.insertItems(at: [destinationIndex])
                         })
                         coordinator.drop(item.dragItem, toItemAt: destinationIndex)
+                        numMoves+=1
+                        updateNumMoves(numMoves: numMoves)
                     }
                 case .copy:
+                    print("inside copy operation")
                     let sourceIndexPath = item.sourceIndexPath ?? selectedIndexPath
                     // - happens in a different collection view
                     let itemProvider = item.dragItem.itemProvider
                     // async call
                     itemProvider.loadObject(ofClass: NSString.self) { (string, error) in
-                        if let string = string as? String {
+                        //if let string = string as? String {
                             DispatchQueue.main.async {
                                 collectionView.performBatchUpdates ({
                                     //self.addStringToDataSource(string, at: destinationIndex.item, from: sourceIndexPath?.item, for: collectionView)
@@ -187,9 +202,10 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                                 })
                                 collectionView.insertItems(at: [destinationIndex])
                             }
-                        }
+                        //}
                     }
                 default:
+                    print("inside default operation")
                     return
                 }
             }
@@ -207,6 +223,7 @@ func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate ses
            
            // - For the single drop item you propose a move if you’re within the same collection view. Otherwise, you propose a copy.
            if collectionView.hasActiveDrag {
+                print("inside drop proposal move")
                return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
            } else {
                guard collectionView != piecesCollectionView else {

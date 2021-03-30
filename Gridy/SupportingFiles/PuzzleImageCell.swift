@@ -23,7 +23,7 @@ class PuzzleImageCell: UICollectionViewCell {
         // Initialization code
         
         isUserInteractionEnabled = true
-        layer.borderWidth = 1.0
-        layer.borderColor = UIColor.gray.cgColor
+        layer.borderWidth = 1.4
+        layer.borderColor = UIColor.darkGray.cgColor
     }
 }
