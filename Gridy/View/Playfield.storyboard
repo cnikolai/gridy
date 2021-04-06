@@ -17,24 +17,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ngm-o2-Ue6">
-                                <rect key="frame" x="10" y="54" width="395" height="145"/>
+                                <rect key="frame" x="10" y="54" width="395" height="139"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moves:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qBK-fI-slM">
-                                        <rect key="frame" x="290" y="16" width="55" height="98"/>
+                                        <rect key="frame" x="290" y="16" width="55" height="92"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FSC-ms-N3p">
-                                        <rect key="frame" x="374" y="16" width="11" height="98"/>
+                                        <rect key="frame" x="374" y="16" width="11" height="92"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jcp-Vy-y81">
-                                        <rect key="frame" x="8" y="47" width="109" height="36"/>
+                                        <rect key="frame" x="8" y="47" width="109" height="30"/>
                                         <color key="backgroundColor" red="0.02617239021" green="0.74694126839999997" blue="0.72039812800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Xon-re-fVt"/>
                                             <constraint firstAttribute="width" constant="109" id="x1m-wI-PP3"/>
                                         </constraints>
                                         <state key="normal" title="New Game">
@@ -50,7 +51,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fWS-OZ-bWs">
-                                        <rect key="frame" x="113" y="24" width="168" height="97"/>
+                                        <rect key="frame" x="113" y="24" width="168" height="91"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="168" id="Uxj-tC-3ux"/>
                                         </constraints>
@@ -81,12 +82,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="oXc-RP-a0g">
-                                <rect key="frame" x="37" y="209" width="341" height="195"/>
+                                <rect key="frame" x="37" y="203" width="341" height="201"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="195" id="erk-72-0CE"/>
-                                </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GZf-l0-dZl">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GZf-l0-dZl">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -104,12 +102,9 @@
                                 </cells>
                             </collectionView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dvK-UQ-QSc">
-                                <rect key="frame" x="37" y="544" width="341" height="195"/>
+                                <rect key="frame" x="37" y="544" width="341" height="301.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="195" id="mI3-Nj-35Q"/>
-                                </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ypn-Dd-5lj">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ypn-Dd-5lj">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -146,6 +141,7 @@
                             <constraint firstItem="ngm-o2-Ue6" firstAttribute="leading" secondItem="Lq8-kx-dv9" secondAttribute="leading" constant="10" id="cCj-hx-bcY"/>
                             <constraint firstItem="dvK-UQ-QSc" firstAttribute="leading" secondItem="IcL-Gp-CxD" secondAttribute="leading" constant="-50" id="cKJ-Vg-kbM"/>
                             <constraint firstItem="oXc-RP-a0g" firstAttribute="trailing" secondItem="IcL-Gp-CxD" secondAttribute="trailing" constant="51" id="jyS-VA-gYs"/>
+                            <constraint firstItem="dvK-UQ-QSc" firstAttribute="height" secondItem="oXc-RP-a0g" secondAttribute="height" multiplier="1.5" id="msM-EB-IYL"/>
                             <constraint firstItem="ngm-o2-Ue6" firstAttribute="centerX" secondItem="oXc-RP-a0g" secondAttribute="centerX" id="pSd-5s-uJh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Lq8-kx-dv9"/>

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  PlayfieldViewController.swift
 //  Gridy
 //
 //  Created by Cynthia Nikolai on 12/8/20.
@@ -40,12 +40,13 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
     }
     
     @IBAction func ShowHint(_ sender: Any) {
-        let popupVC = UIStoryboard(name: "Playfield", bundle: nil).instantiateViewControllerWithIdentifier("sbPopUpID") as! PopupViewController
-        self.addChildViewController(popupVC)
+        let popupVC = UIStoryboard(name: "Playfield", bundle: nil).instantiateViewController(withIdentifier: "sbPopUpID") as! PopupViewController
+        self.addChild(popupVC)
         popupVC.view.frame = self.view.frame
         self.view.addSubview(popupVC.view)
-        popupVC.didMoveToParentViewController(self)
+        popupVC.didMove(toParent: self)
     }
+    
     // MARK: - Local Variables
     
     var creation: Creation!
@@ -70,6 +71,7 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+        addPlaceHolderImages()
     }
     
     // MARK:- Helper Function
@@ -94,6 +96,16 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         let nib = UINib(nibName: "PuzzleImageCell", bundle: nil)
         piecesCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
         boardCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
+    }
+    
+    private func addPlaceHolderImages() {
+        for _ in 0 ..< puzzle.solvedImages.count {
+            puzzle.boardImages.append(blankImage)
+        }
+        // insert lookup image for puzzle pieces
+        puzzle.piecesImages.append(hintImage)
+        piecesCollectionView.reloadData()
+        boardCollectionView.reloadData()
     }
 }
 
@@ -137,8 +149,46 @@ extension PlayfieldViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //when select, want it to be highlighted: come back to this
+        if indexPath.item == (puzzle.piecesImages.count - 1) {
+//            hintImageView.isHidden = false
+//            hintImageView.layer.borderColor = UIColor.black.cgColor
+//            hintImageView.layer.borderWidth = 5
+//            Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(hideHint), userInfo: nil, repeats: false)
+        }
     }
+}
+
+// MARK:- CollectionView Layout
+
+extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView == piecesCollectionView {
+            let width = (piecesCollectionView.frame.size.width-50)/6
+            return CGSize(width: width, height: width)
+        }
+        else {
+            let width = boardCollectionView.frame.size.width/CGFloat(puzzle.boardImages.count).squareRoot()
+            return CGSize(width: width, height: width)        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        if collectionView == piecesCollectionView {
+               return 5
+               }
+               else {
+                   return 0
+               }
+    }
+   
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        if collectionView == piecesCollectionView {
+              return 5
+               }
+               else {
+                  return 0
+               }
+    }
+    
 }
 
 // MARK: - UICollectionViewDragDelegate, UICollectionViewDropDelegate
@@ -158,6 +208,14 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
         return [dragItem]
     }
     
+    func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
+        if collectionView == boardCollectionView {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     // what will happen when you drop the item
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
         
@@ -169,11 +227,6 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                 //let item = puzzleImages[coordinator.destinationIndexPath!.item]
                 print("coordinator proposal operation: ", coordinator.proposal.operation)
 
-                switch coordinator.proposal.operation {
-                    //move item from one to another
-                    //check which collection view dropping it from and append to collectionview
-                case .move:
-                    print("inside move operation")
                     // - happens in the same collection view
                     if let sourceIndexPath = item.sourceIndexPath {
                         collectionView.performBatchUpdates ({
@@ -186,32 +239,9 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                         coordinator.drop(item.dragItem, toItemAt: destinationIndex)
                         numMoves+=1
                         updateNumMoves(numMoves: numMoves)
+                    
                     }
-                case .copy:
-                    print("inside copy operation")
-                    let sourceIndexPath = item.sourceIndexPath ?? selectedIndexPath
-                    // - happens in a different collection view
-                    let itemProvider = item.dragItem.itemProvider
-                    // async call
-                    itemProvider.loadObject(ofClass: NSString.self) { (string, error) in
-                        //if let string = string as? String {
-                            DispatchQueue.main.async {
-                                collectionView.performBatchUpdates ({
-                                    //self.addStringToDataSource(string, at: destinationIndex.item, from: sourceIndexPath?.item, for: collectionView)
-                                    // - old collection view
-                                    if let sourceIndex = sourceIndexPath {
-                                        self.piecesCollectionView.deleteItems(at: [sourceIndex])
-                                    }
-                                    // - new collection view
-                                    collectionView.insertItems(at: [destinationIndex])
-                                })
-                                collectionView.insertItems(at: [destinationIndex])
-                            }
-                        //}
-                    }
-                default:
-                    print("inside default operation")
-                    return
+        
                 }
             }
         }
@@ -219,25 +249,15 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
     }
 
 func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
-       // - Control how the drop is done at the destination index path
-       if session.localDragSession != nil {
-           // - If more than one item is selected, the code cancels the drop.
-           guard session.items.count == 1 else {
-               return UICollectionViewDropProposal(operation: .cancel)
-           }
-           
-           // - For the single drop item you propose a move if you’re within the same collection view. Otherwise, you propose a copy.
-           if collectionView.hasActiveDrag {
-                print("inside drop proposal move")
-               return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
-           } else {
-               guard collectionView != piecesCollectionView else {
-                   return UICollectionViewDropProposal(operation: .cancel)
-               }
-               return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
-           }
+      guard let indexPath = destinationIndexPath else {
+           return UICollectionViewDropProposal(operation: .forbidden)
+       }
+       if indexPath.row >= puzzle.solvedImages.count {
+           return UICollectionViewDropProposal(operation: .forbidden)
+       } else if collectionView == boardCollectionView {
+           return UICollectionViewDropProposal(operation: .move, intent: .insertIntoDestinationIndexPath)
        } else {
-           return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
+           return UICollectionViewDropProposal(operation: .forbidden)
        }
    }
 }

@@ -10,6 +10,8 @@ import UIKit
 
 class PopupViewController: UIViewController {
 
+    // MARK:- Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
