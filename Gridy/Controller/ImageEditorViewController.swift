@@ -12,17 +12,17 @@ import AVFoundation
 
 class ImageEditorViewController: UIViewController {
 
-    // MARK:- local variables
+    // MARK:- Local Variables
     
     var creation: Creation!
     private var initialImageViewOffset = CGPoint()
     
-    // MARK:- outlets
+    // MARK:- Outlets
     
     @IBOutlet weak var creationFrame: GridView!
     @IBOutlet weak var creationImageView: UIImageView!
        
-    // MARK:- action
+    // MARK:- Actions
     
     @IBAction func startPuzzle(_ sender: UIButton) {
         presentPlayfieldViewController()
@@ -50,7 +50,7 @@ class ImageEditorViewController: UIViewController {
         sender.scale = 1
     }
     
-    // MARK:- helper
+    // MARK:- Helper
 
     private func configure() {
 

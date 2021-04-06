@@ -36,13 +36,17 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
     
     @IBAction func NewGame(_ sender: UIButton) {
         //puzzle.piecesImages.shuffle()
-        self.moves.text = String(describing: 0)
+        //self.moves.text = String(describing: 0)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
+        present(viewController, animated: true)
     }
-    
-    @IBAction func ShowHint(_ sender: Any) {
+
+    @IBAction func showHint(_ sender: Any) {
         let popupVC = UIStoryboard(name: "Playfield", bundle: nil).instantiateViewController(withIdentifier: "sbPopUpID") as! PopupViewController
         self.addChild(popupVC)
         popupVC.view.frame = self.view.frame
+        popupVC.creation = creation
         self.view.addSubview(popupVC.view)
         popupVC.didMove(toParent: self)
     }
@@ -103,7 +107,7 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
             puzzle.boardImages.append(blankImage)
         }
         // insert lookup image for puzzle pieces
-        puzzle.piecesImages.append(hintImage)
+        //puzzle.piecesImages.append(hintImage)
         piecesCollectionView.reloadData()
         boardCollectionView.reloadData()
     }
@@ -245,8 +249,6 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                 }
             }
         }
-               
-    }
 
 func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
       guard let indexPath = destinationIndexPath else {

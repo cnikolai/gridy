@@ -9,11 +9,28 @@
 import UIKit
 
 class PopupViewController: UIViewController {
-
+   
+    // MARK:- IBActions
+    
+    @IBAction func closePopup(_ sender: Any) {
+        self.view.removeFromSuperview()
+    }
+    
+    // MARK:- IBOutlets
+    
+    @IBOutlet weak var hintPicture: UIImageView!
+   
+    // MARK: - Local Variables
+    
+    var creation: Creation!
+    
     // MARK:- Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // apply creation data to the views
+        hintPicture.image = creation.image
+        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
     }
 }
