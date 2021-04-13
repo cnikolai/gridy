@@ -37,18 +37,20 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
     @IBAction func NewGame(_ sender: UIButton) {
         //puzzle.piecesImages.shuffle()
         //self.moves.text = String(describing: 0)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
-        present(viewController, animated: true)
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let viewController = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
+//        present(viewController, animated: true)
+        UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true)
     }
 
     @IBAction func showHint(_ sender: Any) {
         let popupVC = UIStoryboard(name: "Playfield", bundle: nil).instantiateViewController(withIdentifier: "sbPopUpID") as! PopupViewController
-        self.addChild(popupVC)
-        popupVC.view.frame = self.view.frame
+        //self.addChild(popupVC)
+        //popupVC.view.frame = self.view.frame
         popupVC.creation = creation
-        self.view.addSubview(popupVC.view)
-        popupVC.didMove(toParent: self)
+        //self.view.addSubview(popupVC.view)
+        //popupVC.didMove(toParent: self)
+        present(popupVC, animated: true)
     }
     
     // MARK: - Local Variables
@@ -129,7 +131,7 @@ extension PlayfieldViewController: UICollectionViewDataSource {
             return puzzle.piecesImages.count
         }
         if collectionView == boardCollectionView {
-            return puzzle.solvedImages.count
+            return puzzle.boardImages.count
         }
         return 0
     }
@@ -142,7 +144,7 @@ extension PlayfieldViewController: UICollectionViewDataSource {
             cell.image = puzzle.piecesImages[indexPath.item]
         }
         if collectionView == boardCollectionView {
-            cell.image = puzzle.solvedImages[indexPath.item]
+            cell.image = puzzle.boardImages[indexPath.item]
 
         }
         return cell
