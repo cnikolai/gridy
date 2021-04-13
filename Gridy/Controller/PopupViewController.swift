@@ -13,7 +13,7 @@ class PopupViewController: UIViewController {
     // MARK:- IBActions
     
     @IBAction func closePopup(_ sender: Any) {
-        self.view.removeFromSuperview()
+        self.dismiss(animated: true)
     }
     
     // MARK:- IBOutlets

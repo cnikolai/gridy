@@ -205,7 +205,7 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         selectedIndexPath = indexPath
 
-            // get the image and
+        // get the image
         let image = puzzle.piecesImages[indexPath.item]
         let itemProvider = NSItemProvider(object: image as UIImage)
         
@@ -229,25 +229,33 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
             if destinationIndex.row >= puzzle.solvedImages.count {
                 return
             } else if collectionView == boardCollectionView {
-                let item = coordinator.items[0]
-                //let item = puzzleImages[coordinator.destinationIndexPath!.item]
-                print("coordinator proposal operation: ", coordinator.proposal.operation)
-
+                let item = coordinator.items.first
                     // - happens in the same collection view
-                    if let sourceIndexPath = item.sourceIndexPath {
+                if let sourceIndexPath = selectedIndexPath {
                         collectionView.performBatchUpdates ({
-                            //moveStringToDataSource(at: sourceIndexPath.item, to: destinationIndex.item, for: collectionView)
-                            // - old collection view
-                            collectionView.deleteItems(at: [sourceIndexPath])
                             // - new collection view
-                            collectionView.insertItems(at: [destinationIndex])
+                            let dragItem = item?.dragItem.localObject as! UIImage
+                                self.puzzle.boardImages.insert(dragItem,at: destinationIndex.row)
+                                boardCollectionView.insertItems(at: [destinationIndex])
+                                //delete from pieces data
+                                self.puzzle.piecesImages.remove(at: sourceIndexPath.row)
+                                // - old collection view
+                                piecesCollectionView.deleteItems(at: [sourceIndexPath])
+                                self.puzzle.piecesImages.insert(blankImage, at: sourceIndexPath.row)
+                            if (!self.puzzle.boardImages.contains(localObject as! UIImage)) {
+                                self.puzzle.boardImages.remove(at: destinationIndex.row+1)
+                            }
+                                let nextIndexPath = IndexPath.init(row: destinationIndex.row+1, section: 0)
+                                boardCollectionView.deleteItems(at: [nextIndexPath])
+                            //}
                         })
-                        coordinator.drop(item.dragItem, toItemAt: destinationIndex)
+                    coordinator.drop(item!.dragItem, toItemAt: destinationIndex)
                         numMoves+=1
                         updateNumMoves(numMoves: numMoves)
-                    
+                    if (self.puzzle.solvedImages == self.puzzle.boardImages) {
+                        //end the game
                     }
-        
+                    }
                 }
             }
         }
