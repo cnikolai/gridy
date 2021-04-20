@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -32,9 +34,7 @@
                                 <color key="backgroundColor" red="0.94988268610000004" green="0.77392262219999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="312" id="3jI-kI-HCg" userLabel="height = 230"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="230" id="7L0-Zg-tca"/>
                                     <constraint firstAttribute="width" constant="298" id="OVp-Dp-W8T" userLabel="width = 230"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="230" id="hOX-tR-Pjh"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="Adjust the Puzzle Image: Zoom, Rotate, Reposition" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nD3-gU-XCc">
@@ -46,7 +46,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iei-L9-PSN">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iei-L9-PSN">
                                 <rect key="frame" x="154.5" y="537" width="105" height="50"/>
                                 <color key="backgroundColor" red="0.02617239021" green="0.74694126839999997" blue="0.72039812800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -66,7 +66,8 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="T1y-rG-cwq"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="nD3-gU-XCc" firstAttribute="top" secondItem="T1y-rG-cwq" secondAttribute="top" constant="30" id="25b-7j-xuX"/>
                             <constraint firstItem="nD3-gU-XCc" firstAttribute="centerX" secondItem="ZCd-cu-SkI" secondAttribute="centerX" id="E7w-Th-Sfv"/>
@@ -76,7 +77,6 @@
                             <constraint firstItem="Iei-L9-PSN" firstAttribute="top" secondItem="JX2-9j-icS" secondAttribute="bottom" constant="57" id="lqO-Oq-74Z"/>
                             <constraint firstItem="Iei-L9-PSN" firstAttribute="centerX" secondItem="ZCd-cu-SkI" secondAttribute="centerX" id="t5m-vP-SZI"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="T1y-rG-cwq"/>
                     </view>
                     <connections>
                         <outlet property="creationFrame" destination="JX2-9j-icS" id="PxI-Uy-dKH"/>
@@ -90,5 +90,8 @@
     </scenes>
     <resources>
         <image name="FrameIT-placeholder" width="270" height="270"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

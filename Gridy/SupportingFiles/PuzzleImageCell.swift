@@ -20,7 +20,6 @@ class PuzzleImageCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         
         isUserInteractionEnabled = true
         layer.borderWidth = 1.4

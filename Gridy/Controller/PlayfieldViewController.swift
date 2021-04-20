@@ -232,23 +232,37 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                 let item = coordinator.items.first
                     // - happens in the same collection view
                 if let sourceIndexPath = selectedIndexPath {
-                        collectionView.performBatchUpdates ({
-                            // - new collection view
-                            let dragItem = item?.dragItem.localObject as! UIImage
-                                self.puzzle.boardImages.insert(dragItem,at: destinationIndex.row)
-                                boardCollectionView.insertItems(at: [destinationIndex])
-                                //delete from pieces data
-                                self.puzzle.piecesImages.remove(at: sourceIndexPath.row)
-                                // - old collection view
-                                piecesCollectionView.deleteItems(at: [sourceIndexPath])
-                                self.puzzle.piecesImages.insert(blankImage, at: sourceIndexPath.row)
-                            if (!self.puzzle.boardImages.contains(localObject as! UIImage)) {
-                                self.puzzle.boardImages.remove(at: destinationIndex.row+1)
-                            }
-                                let nextIndexPath = IndexPath.init(row: destinationIndex.row+1, section: 0)
-                                boardCollectionView.deleteItems(at: [nextIndexPath])
-                            //}
-                        })
+                    collectionView.performBatchUpdates ({
+                        // get the dragged image
+                        let dragItem = item?.dragItem.localObject as! UIImage
+                        // check if destination has blank image
+                       if puzzle.boardImages[destinationIndex.item] == blankImage {
+                           // replace destination image with dragged image and update collectionview
+                           self.puzzle.boardImages[destinationIndex.row] = dragItem
+                           boardCollectionView.insertItems(at: [destinationIndex])
+                           // insert blank image where dragged image was and update collectionview
+                           self.puzzle.piecesImages[sourceIndexPath.row] = blankImage
+                           piecesCollectionView.insertItems(at: [sourceIndexPath])
+                       }
+                   })
+                    
+//                    collectionView.performBatchUpdates ({
+//                            // - new collection view
+//                            let dragItem = item?.dragItem.localObject as! UIImage
+//                                self.puzzle.boardImages.insert(dragItem,at: destinationIndex.row)
+//                                boardCollectionView.insertItems(at: [destinationIndex])
+//                                //delete from pieces data
+//                                self.puzzle.piecesImages.remove(at: sourceIndexPath.row)
+//                                // - old collection view
+//                                piecesCollectionView.deleteItems(at: [sourceIndexPath])
+//                                self.puzzle.piecesImages.insert(blankImage, at: sourceIndexPath.row)
+//                            if (!self.puzzle.boardImages.contains(localObject as! UIImage)) {
+//                                self.puzzle.boardImages.remove(at: destinationIndex.row+1)
+//                            }
+//                                let nextIndexPath = IndexPath.init(row: destinationIndex.row+1, section: 0)
+//                                boardCollectionView.deleteItems(at: [nextIndexPath])
+//                            //}
+//                        })
                     coordinator.drop(item!.dragItem, toItemAt: destinationIndex)
                         numMoves+=1
                         updateNumMoves(numMoves: numMoves)
