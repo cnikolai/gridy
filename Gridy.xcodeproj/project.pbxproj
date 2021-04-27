@@ -76,9 +76,9 @@
 		376704F8257FA9A200B5E9A2 /* Gridy */ = {
 			isa = PBXGroup;
 			children = (
-				3767052E257FC3F600B5E9A2 /* Model */,
-				37670527257FABA000B5E9A2 /* View */,
-				37670526257FAB8700B5E9A2 /* Controller */,
+				3767052E257FC3F600B5E9A2 /* Models */,
+				37670527257FABA000B5E9A2 /* Views */,
+				37670526257FAB8700B5E9A2 /* Controllers */,
 				37670502257FA9A400B5E9A2 /* Assets.xcassets */,
 				37670523257FAA2F00B5E9A2 /* SupportingFiles */,
 				37670507257FA9A400B5E9A2 /* Info.plist */,
@@ -100,7 +100,7 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
-		37670526257FAB8700B5E9A2 /* Controller */ = {
+		37670526257FAB8700B5E9A2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				3726A4142613393700CA9EC5 /* PopupViewController.swift */,
@@ -108,25 +108,25 @@
 				37670531257FE2B900B5E9A2 /* PlayfieldViewController.swift */,
 				376704FD257FA9A200B5E9A2 /* MainViewController.swift */,
 			);
-			path = Controller;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
-		37670527257FABA000B5E9A2 /* View */ = {
+		37670527257FABA000B5E9A2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				376704FF257FA9A200B5E9A2 /* Main.storyboard */,
 				37670528257FB10100B5E9A2 /* ImageEditor.storyboard */,
 				3767052A257FB3EC00B5E9A2 /* Playfield.storyboard */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		3767052E257FC3F600B5E9A2 /* Model */ = {
+		3767052E257FC3F600B5E9A2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				3767052C257FC3EB00B5E9A2 /* Creation.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
