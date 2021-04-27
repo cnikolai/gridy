@@ -65,6 +65,18 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         UIImage(named: "Gridy-lookup")!
     }()
     
+//    private let swipeView: UIView = {
+//           // Initialize View
+//           let view = UIView(frame: CGRect(origin: .zero,
+//                                           size: CGSize(width: 200.0, height: 200.0)))
+//
+//           // Configure View
+//           view.backgroundColor = .blue
+//           view.translatesAutoresizingMaskIntoConstraints = false
+//
+//           return view
+//       }()
+    
     private var numMoves:Int = 0
     
     // MARK:- Lifecycle
@@ -95,6 +107,29 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         let nib = UINib(nibName: "PuzzleImageCell", bundle: nil)
         piecesCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
         boardCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
+        
+        // Add to View Hierarchy
+        //view.addSubview(swipeView)
+        // Swipe (up)
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
+        swipeGesture.direction = UISwipeGestureRecognizer.Direction.up
+        boardCollectionView.addGestureRecognizer(swipeGesture)
+    }
+    
+    // Swipe action
+    @objc private func handleSwipe(_ gesture: UISwipeGestureRecognizer) {
+        //let originalLocation = swipeView.center
+        if gesture.direction == UISwipeGestureRecognizer.Direction.up {
+            //get the collection view
+            //try unwarpping as uiimage
+            
+            //add to cell? 
+            let view = gesture.view as? UIImage
+            if view == boardCollectionView {
+                //remove from boardpieces collection
+                print("swiped up gesture tapped")
+            }
+        }
     }
     
     private func addPlaceHolderImages() {
@@ -195,7 +230,6 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
         // get the image
         let image = puzzle.piecesImages[indexPath.item]
         if image != blankImage {
-            print("reached here")
             selectedIndexPath = indexPath
 
             let itemProvider = NSItemProvider(object: image as UIImage)
