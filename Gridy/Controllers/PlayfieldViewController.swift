@@ -22,6 +22,12 @@ extension UIImage {
     }
 }
 
+extension PlayfieldViewController {
+    func canBecomeFocused() -> Bool {
+        return true
+    }
+}
+
 // MARK: - PlayfieldViewController
 
 class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
@@ -29,9 +35,7 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
     // MARK:- Outlets
     
     @IBOutlet weak var piecesCollectionView: UICollectionView!
-    
     @IBOutlet weak var boardCollectionView: UICollectionView!
-    
     @IBOutlet weak var moves: UILabel!
     
     @IBAction func NewGame(_ sender: UIButton) {
@@ -40,11 +44,7 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
 
     @IBAction func showHint(_ sender: Any) {
         let popupVC = UIStoryboard(name: "Playfield", bundle: nil).instantiateViewController(withIdentifier: "sbPopUpID") as! PopupViewController
-        //self.addChild(popupVC)
-        //popupVC.view.frame = self.view.frame
         popupVC.creation = creation
-        //self.view.addSubview(popupVC.view)
-        //popupVC.didMove(toParent: self)
         present(popupVC, animated: true)
     }
     
@@ -65,18 +65,6 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         UIImage(named: "Gridy-lookup")!
     }()
     
-//    private let swipeView: UIView = {
-//           // Initialize View
-//           let view = UIView(frame: CGRect(origin: .zero,
-//                                           size: CGSize(width: 200.0, height: 200.0)))
-//
-//           // Configure View
-//           view.backgroundColor = .blue
-//           view.translatesAutoresizingMaskIntoConstraints = false
-//
-//           return view
-//       }()
-    
     private var numMoves:Int = 0
     
     // MARK:- Lifecycle
@@ -96,7 +84,6 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         piecesCollectionView.dragDelegate = self
         piecesCollectionView.dropDelegate = self
         piecesCollectionView.dragInteractionEnabled = true
-
         
         boardCollectionView.dataSource = self
         boardCollectionView.delegate = self
@@ -108,26 +95,22 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         piecesCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
         boardCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
         
-        // Add to View Hierarchy
-        //view.addSubview(swipeView)
-        // Swipe (up)
-        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
-        swipeGesture.direction = UISwipeGestureRecognizer.Direction.up
-        boardCollectionView.addGestureRecognizer(swipeGesture)
     }
     
     // Swipe action
-    @objc private func handleSwipe(_ gesture: UISwipeGestureRecognizer) {
-        //let originalLocation = swipeView.center
-        if gesture.direction == UISwipeGestureRecognizer.Direction.up {
-            //get the collection view
-            //try unwarpping as uiimage
+    @objc private func handleSwipe(_ sender: UISwipeGestureRecognizer) {
+        print("swiped up gesture tapped3")
+        if sender.direction == UISwipeGestureRecognizer.Direction.up {
+            print("swiped up gesture tapped")
             
-            //add to cell? 
-            let view = gesture.view as? UIImage
-            if view == boardCollectionView {
-                //remove from boardpieces collection
-                print("swiped up gesture tapped")
+            //add to cell?
+            if let view = sender.view as? UIImageView {
+                print("swiped up gesture tapped2")
+                puzzle.boardImages.remove(at: view.tag)
+                puzzle.piecesImages.append(view.image!)
+                boardCollectionView.reloadData()
+                let indexToRemove = IndexPath.init(row: view.tag, section: 0)
+                piecesCollectionView.deleteItems(at: [indexToRemove])
             }
         }
     }
@@ -172,8 +155,14 @@ extension PlayfieldViewController: UICollectionViewDataSource {
         }
         if collectionView == boardCollectionView {
             cell.image = puzzle.boardImages[indexPath.item]
-
+            // Swipe (up) gesture recognizer
+            let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
+            swipeGesture.direction = UISwipeGestureRecognizer.Direction.up
+            cell.imageView.addGestureRecognizer(swipeGesture)
+            cell.imageView.isUserInteractionEnabled = true
+            cell.imageView.tag = indexPath.row
         }
+
         return cell
     }
     
@@ -227,16 +216,16 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
     // the items that start the drag process at an index
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         if collectionView == piecesCollectionView {
-        // get the image
-        let image = puzzle.piecesImages[indexPath.item]
-        if image != blankImage {
-            selectedIndexPath = indexPath
+            // get the image
+            let image = puzzle.piecesImages[indexPath.item]
+            if image != blankImage {
+                selectedIndexPath = indexPath
 
-            let itemProvider = NSItemProvider(object: image as UIImage)
-            let dragItem = UIDragItem(itemProvider: itemProvider)
-            dragItem.localObject = image
-            return [dragItem]
-        }
+                let itemProvider = NSItemProvider(object: image as UIImage)
+                let dragItem = UIDragItem(itemProvider: itemProvider)
+                dragItem.localObject = image
+                return [dragItem]
+            }
         }
         return []
     }
@@ -290,8 +279,10 @@ func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate ses
        if indexPath.row >= puzzle.solvedImages.count {
            return UICollectionViewDropProposal(operation: .forbidden)
        } else if collectionView == boardCollectionView {
+        print("REACHED HERE")
            return UICollectionViewDropProposal(operation: .move, intent: .insertIntoDestinationIndexPath)
        } else {
+        print("REACHED HERE2")
            return UICollectionViewDropProposal(operation: .forbidden)
        }
    }
