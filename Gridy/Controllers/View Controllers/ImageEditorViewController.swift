@@ -27,24 +27,24 @@ class ImageEditorViewController: UIViewController {
     }
     
     @objc func moveImageView(_ sender: UIPanGestureRecognizer) {
-        let translation = sender.translation(in: creationFrame.superview)
+        let translation = sender.translation(in: creationImageView.superview)
         
         if sender.state == .began {
-            initialImageViewOffset = creationFrame.frame.origin
+            initialImageViewOffset = creationImageView.frame.origin
         }
         
-        let position = CGPoint(x: translation.x + initialImageViewOffset.x - creationFrame.frame.origin.x, y: translation.y + initialImageViewOffset.y - creationFrame.frame.origin.y)
+        let position = CGPoint(x: translation.x + initialImageViewOffset.x - creationImageView.frame.origin.x, y: translation.y + initialImageViewOffset.y - creationImageView.frame.origin.y)
         
-        creationFrame.transform = creationFrame.transform.translatedBy(x: position.x, y: position.y)
+        creationImageView.transform = creationImageView.transform.translatedBy(x: position.x, y: position.y)
     }
     
     @objc func rotateImageView(_ sender: UIRotationGestureRecognizer) {
-        creationFrame.transform = creationFrame.transform.rotated(by: sender.rotation)
+        creationImageView.transform = creationImageView.transform.rotated(by: sender.rotation)
         sender.rotation = 0
     }
     
     @objc func scaleImageView(_ sender: UIPinchGestureRecognizer) {
-        creationFrame.transform = creationFrame.transform.scaledBy(x: sender.scale, y: sender.scale)
+        creationImageView.transform = creationImageView.transform.scaledBy(x: sender.scale, y: sender.scale)
         sender.scale = 1
     }
     
@@ -52,28 +52,28 @@ class ImageEditorViewController: UIViewController {
 
     private func configure() {
         NSLayoutConstraint.activate([
-            creationFrame.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            creationFrame.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            creationFrame.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor),
-            creationFrame.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor),
-            creationFrame.heightAnchor.constraint(equalTo: creationFrame.widthAnchor, multiplier: 1)
+            creationImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            creationImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            creationImageView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor),
+            creationImageView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor),
+            creationImageView.heightAnchor.constraint(equalTo: creationImageView.widthAnchor, multiplier: 1)
         ])
         
         // apply creation data to the views
         creationImageView.image = creation.image
-        creationFrame.isUserInteractionEnabled = true
+        creationImageView.isUserInteractionEnabled = true
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveImageView(_:)))
         //panGestureRecognizer.delegate = self
-        creationFrame.addGestureRecognizer(panGestureRecognizer)
+        creationImageView.addGestureRecognizer(panGestureRecognizer)
         
         let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(rotateImageView(_:)))
         //rotationGestureRecognizer.delegate = self
-        creationFrame.addGestureRecognizer(rotationGestureRecognizer)
+        creationImageView.addGestureRecognizer(rotationGestureRecognizer)
         
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(scaleImageView(_:)))
         //pinchGestureRecognizer.delegate = self
-        creationFrame.addGestureRecognizer(pinchGestureRecognizer)
+        creationImageView.addGestureRecognizer(pinchGestureRecognizer)
     }
     
     private func presentPlayfieldViewController() {
