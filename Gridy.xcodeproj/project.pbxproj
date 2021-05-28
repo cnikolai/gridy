@@ -138,8 +138,8 @@
 			children = (
 				3726A4142613393700CA9EC5 /* PopupViewController.swift */,
 				37670532257FE2B900B5E9A2 /* ImageEditorViewController.swift */,
-				37670531257FE2B900B5E9A2 /* PlayfieldViewController.swift */,
 				376704FD257FA9A200B5E9A2 /* MainViewController.swift */,
+				37670531257FE2B900B5E9A2 /* PlayfieldViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";

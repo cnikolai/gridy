@@ -13,65 +13,67 @@ import AVFoundation
 class ImageEditorViewController: UIViewController {
 
     // MARK:- Local Variables
-    
     var creation: Creation!
     private var initialImageViewOffset = CGPoint()
     
     // MARK:- Outlets
-    
     @IBOutlet weak var creationImageView: UIImageView!
     @IBOutlet weak var creationFrame: GridView!
    
        
     // MARK:- Actions
-    
     @IBAction func startPuzzle(_ sender: UIButton) {
         presentPlayfieldViewController()
     }
     
     @objc func moveImageView(_ sender: UIPanGestureRecognizer) {
-        let translation = sender.translation(in: creationImageView.superview)
+        let translation = sender.translation(in: creationFrame.superview)
         
         if sender.state == .began {
-            initialImageViewOffset = creationImageView.frame.origin
+            initialImageViewOffset = creationFrame.frame.origin
         }
         
-        let position = CGPoint(x: translation.x + initialImageViewOffset.x - creationImageView.frame.origin.x, y: translation.y + initialImageViewOffset.y - creationImageView.frame.origin.y)
+        let position = CGPoint(x: translation.x + initialImageViewOffset.x - creationFrame.frame.origin.x, y: translation.y + initialImageViewOffset.y - creationFrame.frame.origin.y)
         
-        creationImageView.transform = creationImageView.transform.translatedBy(x: position.x, y: position.y)
+        creationFrame.transform = creationFrame.transform.translatedBy(x: position.x, y: position.y)
     }
     
     @objc func rotateImageView(_ sender: UIRotationGestureRecognizer) {
-        creationImageView.transform = creationImageView.transform.rotated(by: sender.rotation)
+        creationFrame.transform = creationFrame.transform.rotated(by: sender.rotation)
         sender.rotation = 0
     }
     
     @objc func scaleImageView(_ sender: UIPinchGestureRecognizer) {
-        creationImageView.transform = creationImageView.transform.scaledBy(x: sender.scale, y: sender.scale)
+        creationFrame.transform = creationFrame.transform.scaledBy(x: sender.scale, y: sender.scale)
         sender.scale = 1
     }
     
     // MARK:- Helper
 
     private func configure() {
-
+        NSLayoutConstraint.activate([
+            creationFrame.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            creationFrame.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            creationFrame.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor),
+            creationFrame.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor),
+            creationFrame.heightAnchor.constraint(equalTo: creationFrame.widthAnchor, multiplier: 1)
+        ])
+        
         // apply creation data to the views
         creationImageView.image = creation.image
-        //creationFrame.backgroundColor = UIColor.yellow
-        
-        creationImageView.isUserInteractionEnabled = true
+        creationFrame.isUserInteractionEnabled = true
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveImageView(_:)))
         //panGestureRecognizer.delegate = self
-        creationImageView.addGestureRecognizer(panGestureRecognizer)
+        creationFrame.addGestureRecognizer(panGestureRecognizer)
         
         let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(rotateImageView(_:)))
         //rotationGestureRecognizer.delegate = self
-        creationImageView.addGestureRecognizer(rotationGestureRecognizer)
+        creationFrame.addGestureRecognizer(rotationGestureRecognizer)
         
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(scaleImageView(_:)))
         //pinchGestureRecognizer.delegate = self
-        creationImageView.addGestureRecognizer(pinchGestureRecognizer)
+        creationFrame.addGestureRecognizer(pinchGestureRecognizer)
     }
     
     private func presentPlayfieldViewController() {
@@ -82,7 +84,6 @@ class ImageEditorViewController: UIViewController {
     }
     
     // MARK:- Lifecyle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -90,7 +91,7 @@ class ImageEditorViewController: UIViewController {
     }
 }
 
-// MARK:- GestureRecognizer
+// MARK:- Simultaneous GestureRecognizer
 
 //extension ImageEditorViewController: UIGestureRecognizerDelegate {
 //    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,

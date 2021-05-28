@@ -267,11 +267,17 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                         updateNumMoves(numMoves: numMoves)
                     if (self.puzzle.solvedImages == self.puzzle.boardImages) {
                         //end the game
-                    }
+                        let alertController = UIAlertController(title: "You Won!", message: "Congratulations", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
+                            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true)
+                        }
+                        alertController.addAction(okAction)
+                        present(alertController, animated: true)
                     }
                 }
             }
         }
+    }
 
 func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
       guard let indexPath = destinationIndexPath else {
