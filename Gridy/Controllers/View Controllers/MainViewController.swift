@@ -162,6 +162,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         
         let viewController = storyboard.instantiateViewController(withIdentifier: "ImageEditorViewController") as! ImageEditorViewController
         viewController.creation = creation
+        viewController.modalPresentationStyle = .fullScreen
         present(viewController, animated: true)
     }
 

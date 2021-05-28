@@ -44,6 +44,7 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
 
     @IBAction func showHint(_ sender: Any) {
         let popupVC = UIStoryboard(name: "Playfield", bundle: nil).instantiateViewController(withIdentifier: "sbPopUpID") as! PopupViewController
+        popupVC.modalPresentationStyle = .fullScreen
         popupVC.creation = creation
         present(popupVC, animated: true)
     }

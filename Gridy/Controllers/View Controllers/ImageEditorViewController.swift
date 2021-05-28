@@ -51,28 +51,25 @@ class ImageEditorViewController: UIViewController {
     // MARK:- Helper
 
     private func configure() {
-        NSLayoutConstraint.activate([
-            creationImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            creationImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            creationImageView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor),
-            creationImageView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor),
-            creationImageView.heightAnchor.constraint(equalTo: creationImageView.widthAnchor, multiplier: 1)
-        ])
+//        NSLayoutConstraint.activate([
+//            creationImageView.centerXAnchor.constraint(equalTo: creationFrame.centerXAnchor),
+//            creationImageView.centerYAnchor.constraint(equalTo: creationFrame.centerYAnchor),
+//            creationImageView.leadingAnchor.constraint(greaterThanOrEqualTo: creationFrame.leadingAnchor),
+//            creationImageView.trailingAnchor.constraint(lessThanOrEqualTo: creationFrame.trailingAnchor),
+//            creationImageView.heightAnchor.constraint(equalTo: creationFrame.widthAnchor, multiplier: 1)
+//                ])
         
         // apply creation data to the views
         creationImageView.image = creation.image
         creationImageView.isUserInteractionEnabled = true
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveImageView(_:)))
-        //panGestureRecognizer.delegate = self
         creationImageView.addGestureRecognizer(panGestureRecognizer)
         
         let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(rotateImageView(_:)))
-        //rotationGestureRecognizer.delegate = self
         creationImageView.addGestureRecognizer(rotationGestureRecognizer)
         
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(scaleImageView(_:)))
-        //pinchGestureRecognizer.delegate = self
         creationImageView.addGestureRecognizer(pinchGestureRecognizer)
     }
     
@@ -80,6 +77,7 @@ class ImageEditorViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Playfield", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "PlayfieldViewController") as! PlayfieldViewController
         viewController.creation = creation
+        viewController.modalPresentationStyle = .fullScreen
         present(viewController, animated: true)
     }
     
