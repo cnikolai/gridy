@@ -76,8 +76,7 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         addPlaceHolderImages()
     }
     
-    // MARK:- Helper Function
-    
+    // MARK:- Helper Functions
     func configure() {
        
         piecesCollectionView.dataSource = self
@@ -102,6 +101,8 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
     @objc private func handleSwipe(_ sender: UISwipeGestureRecognizer) {
         if sender.direction == UISwipeGestureRecognizer.Direction.up {
             if let view = sender.view as? UIImageView {
+                numMoves+=1
+                updateNumMoves(numMoves: numMoves)
                 puzzle.boardImages.remove(at: view.tag)
                 // turn into blank cell.
                 puzzle.boardImages.insert(blankImage, at: view.tag)
@@ -133,7 +134,6 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
 }
 
 // MARK: - UICollectionViewDataSource
-
 extension PlayfieldViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -179,7 +179,6 @@ extension PlayfieldViewController: UICollectionViewDataSource {
 }
 
 // MARK:- CollectionView Layout
-
 extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == piecesCollectionView {
@@ -212,8 +211,20 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
 }
 
 // MARK: - UICollectionViewDragDelegate, UICollectionViewDropDelegate
-
 extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionViewDropDelegate, UIDropInteractionDelegate {
+   
+//    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+//        return "The pig is in the poke"
+//    }
+//
+//    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+//        if activityType == .postToTwitter {
+//                return "Download #MyAwesomeApp via @twostraws."
+//            } else {
+//                return "Download MyAwesomeApp from TwoStraws."
+//            }
+//    }
+    
     
     // the items that start the drag process at an index
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
@@ -268,12 +279,20 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                         updateNumMoves(numMoves: numMoves)
                     if (self.puzzle.solvedImages == self.puzzle.boardImages) {
                         //end the game
-                        let alertController = UIAlertController(title: "You Won!", message: "Congratulations", preferredStyle: .alert)
-                        let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
-                            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true)
-                        }
-                        alertController.addAction(okAction)
-                        present(alertController, animated: true)
+//                        let alertController = UIAlertController(title: "You Won!", message: "Congratulations", preferredStyle: .alert)
+//                        let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
+//                            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true)
+//                        }
+//                        alertController.addAction(okAction)
+//                        present(alertController, animated: true)
+                        let activity = UIActivityViewController(
+                            activityItems: [creation.image, "number of moves: \(numMoves)"],
+                            applicationActivities: nil
+                          )
+                          //activity.popoverPresentationController?.barButtonItem = sender
+                          present(activity, animated: true, completion: nil)
+                        //}
+
                     }
                 }
             }

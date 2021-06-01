@@ -18,24 +18,29 @@ class ImageEditorViewController: UIViewController {
     
     // MARK:- Outlets
     @IBOutlet weak var creationImageView: UIImageView!
-    @IBOutlet weak var creationFrame: GridView!
-   
+    @IBOutlet weak var creationFrame: UIView!
+    
        
     // MARK:- Actions
     @IBAction func startPuzzle(_ sender: UIButton) {
         presentPlayfieldViewController()
     }
     
+//    @IBAction func pinchGestureRecognizerTapped(_ sender: UIPinchGestureRecognizer) {
+//        creationImageView.transform = creationImageView.transform.scaledBy(x: sender.scale, y: sender.scale)
+//        sender.scale = 1
+//    }
+    
+    
+    
     @objc func moveImageView(_ sender: UIPanGestureRecognizer) {
-        let translation = sender.translation(in: creationImageView.superview)
+        print("inside panGestureRecognizer")
+        let translation = sender.translation(in: creationFrame.superview)
         
-        if sender.state == .began {
-            initialImageViewOffset = creationImageView.frame.origin
+        if sender.state == .began || sender.state == .changed {
+            creationImageView.center = CGPoint(x: creationImageView.center.x + translation.x, y: creationImageView.center.y + translation.y)
+            sender.setTranslation(CGPoint.zero, in: creationImageView)
         }
-        
-        let position = CGPoint(x: translation.x + initialImageViewOffset.x - creationImageView.frame.origin.x, y: translation.y + initialImageViewOffset.y - creationImageView.frame.origin.y)
-        
-        creationImageView.transform = creationImageView.transform.translatedBy(x: position.x, y: position.y)
     }
     
     @objc func rotateImageView(_ sender: UIRotationGestureRecognizer) {
@@ -49,34 +54,36 @@ class ImageEditorViewController: UIViewController {
     }
     
     // MARK:- Helper
-
     private func configure() {
-//        NSLayoutConstraint.activate([
-//            creationImageView.centerXAnchor.constraint(equalTo: creationFrame.centerXAnchor),
-//            creationImageView.centerYAnchor.constraint(equalTo: creationFrame.centerYAnchor),
-//            creationImageView.leadingAnchor.constraint(greaterThanOrEqualTo: creationFrame.leadingAnchor),
-//            creationImageView.trailingAnchor.constraint(lessThanOrEqualTo: creationFrame.trailingAnchor),
-//            creationImageView.heightAnchor.constraint(equalTo: creationFrame.widthAnchor, multiplier: 1)
-//                ])
         
         // apply creation data to the views
         creationImageView.image = creation.image
         creationImageView.isUserInteractionEnabled = true
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveImageView(_:)))
+        panGestureRecognizer.delegate = self
         creationImageView.addGestureRecognizer(panGestureRecognizer)
         
         let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(rotateImageView(_:)))
+        rotationGestureRecognizer.delegate  = self
         creationImageView.addGestureRecognizer(rotationGestureRecognizer)
         
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(scaleImageView(_:)))
+        pinchGestureRecognizer.delegate = self
         creationImageView.addGestureRecognizer(pinchGestureRecognizer)
     }
     
     private func presentPlayfieldViewController() {
+        creationImageView.layer.zPosition = -1
+
+        UIGraphicsBeginImageContextWithOptions(creationFrame.bounds.size, false, 0)
+        creationFrame.drawHierarchy(in: creationFrame.bounds, afterScreenUpdates: true)
+        let snapshot = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
         let storyboard = UIStoryboard(name: "Playfield", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "PlayfieldViewController") as! PlayfieldViewController
-        viewController.creation = creation
+        viewController.creation = Creation(image:snapshot!)
         viewController.modalPresentationStyle = .fullScreen
         present(viewController, animated: true)
     }
@@ -91,16 +98,19 @@ class ImageEditorViewController: UIViewController {
 
 // MARK:- Simultaneous GestureRecognizer
 
-//extension ImageEditorViewController: UIGestureRecognizerDelegate {
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-//                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer)
-//        -> Bool {
-//
-//            // simultaneous gesture recognition will only be supported for creationImageView
+extension ImageEditorViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer)
+        -> Bool {
+
+        if gestureRecognizer is UIPanGestureRecognizer || otherGestureRecognizer is UIPanGestureRecognizer {
+            return false
+        }
+            // simultaneous gesture recognition will only be supported for creationImageView
 //            if gestureRecognizer.view != creationImageView {
 //                return false
 //            }
-//
-//            return true
-//    }
-//}
+
+            return true
+    }
+}

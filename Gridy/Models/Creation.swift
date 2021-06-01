@@ -20,4 +20,9 @@ class Creation {
         // stored property initialization
         image = Creation.defaultImage
     }
+    
+    init(image: UIImage) {
+        // stored property initialization
+        self.image = image
+    }
 }
