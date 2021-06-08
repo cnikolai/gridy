@@ -39,7 +39,7 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
     @IBOutlet weak var moves: UILabel!
     
     @IBAction func NewGame(_ sender: UIButton) {
-        UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true)
+        UIApplication.shared.windows.filter { $0.isKeyWindow }.first?.rootViewController!.dismiss(animated: true)
     }
 
     @IBAction func showHint(_ sender: Any) {
@@ -233,7 +233,6 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
             let image = puzzle.piecesImages[indexPath.item]
             if image != blankImage {
                 selectedIndexPath = indexPath
-
                 let itemProvider = NSItemProvider(object: image as UIImage)
                 let dragItem = UIDragItem(itemProvider: itemProvider)
                 dragItem.localObject = image
@@ -267,32 +266,52 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                         // check if destination has blank image
                        if puzzle.boardImages[destinationIndex.item] == blankImage {
                            // replace destination image with dragged image and update collectionview
-                           self.puzzle.boardImages[destinationIndex.row] = dragItem
-                           boardCollectionView.insertItems(at: [destinationIndex])
+                        //if puzzle.boardImages.count == 1 {
+                            //boardCollectionView.reloadData()
+                                //}
+                       // else {
+                        //    self.puzzle.boardImages[destinationIndex.row] = dragItem
+                       
+                        self.puzzle.boardImages.insert(dragItem, at: destinationIndex.row)
+                            boardCollectionView.insertItems(at: [destinationIndex])
+                        self.puzzle.boardImages.remove(at: self.puzzle.boardImages.count - 1)
+                       // self.boardCollectionView.reloadData()
+                        let lastIndex = boardCollectionView.indexPathsForVisibleItems.last
+                        self.boardCollectionView.deleteItems(at: [lastIndex!])
                            // insert blank image where dragged image was and update collectionview
-                           self.puzzle.piecesImages[sourceIndexPath.row] = blankImage
-                           piecesCollectionView.insertItems(at: [sourceIndexPath])
+                           //self.puzzle.piecesImages[sourceIndexPath.row] = blankImage
+                        self.puzzle.piecesImages.remove(at: sourceIndexPath.row)
+                        self.puzzle.piecesImages.insert(blankImage, at: sourceIndexPath.row)
+                           //piecesCollectionView.insertItems(at: [sourceIndexPath])
+                        piecesCollectionView.reloadData()
                        }
-                   })
+                    })
+                    //{ _ in
+                        //let indexPath = IndexPath(puzzle.boardImages.last)
+                       
+                       // self.boardCollectionView.deleteItems(at: [IndexPath(row: destinationIndex.row + 1, section: 0)])
+                        //}
+                   // }
+//                    collectionView.performBatchUpdates {
+//
+//                    }
+
+                    
                     coordinator.drop(item!.dragItem, toItemAt: destinationIndex)
                         numMoves+=1
                         updateNumMoves(numMoves: numMoves)
                     if (self.puzzle.solvedImages == self.puzzle.boardImages) {
                         //end the game
-//                        let alertController = UIAlertController(title: "You Won!", message: "Congratulations", preferredStyle: .alert)
-//                        let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
-//                            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true)
-//                        }
-//                        alertController.addAction(okAction)
-//                        present(alertController, animated: true)
-                        let activity = UIActivityViewController(
-                            activityItems: [creation.image, "number of moves: \(numMoves)"],
-                            applicationActivities: nil
-                          )
-                          //activity.popoverPresentationController?.barButtonItem = sender
-                          present(activity, animated: true, completion: nil)
-                        //}
-
+                        let alertController = UIAlertController(title: "You Won!", message: "Congratulations", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
+                            let activity = UIActivityViewController(
+                                activityItems: [self.creation.image, "number of moves: \(self.numMoves)"],
+                                applicationActivities: nil
+                              )
+                            self.present(activity, animated: true, completion: nil)
+                        }
+                        alertController.addAction(okAction)
+                        present(alertController, animated: true)
                     }
                 }
             }
