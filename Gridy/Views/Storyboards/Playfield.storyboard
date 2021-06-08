@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ccx-qp-yw9">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
@@ -43,19 +43,19 @@
                                                 </connections>
                                             </button>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Gridy-name-small-grey" translatesAutoresizingMaskIntoConstraints="NO" id="Ir0-YP-X5e">
-                                                <rect key="frame" x="152.5" y="0.0" width="61" height="34"/>
+                                                <rect key="frame" x="152.66666666666666" y="0.0" width="60.666666666666657" height="34"/>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="sMH-Lq-wJ3">
-                                                <rect key="frame" x="281" y="2.5" width="101" height="29"/>
+                                                <rect key="frame" x="280.66666666666669" y="2.6666666666666661" width="101.33333333333331" height="28.666666666666671"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Moves:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qBK-fI-slM">
-                                                        <rect key="frame" x="0.0" y="0.0" width="75.5" height="29"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="76" height="28.666666666666668"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="0 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FSC-ms-N3p" userLabel="#">
-                                                        <rect key="frame" x="80.5" y="0.0" width="20.5" height="29"/>
+                                                        <rect key="frame" x="81" y="0.0" width="20.333333333333329" height="28.666666666666668"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -101,7 +101,7 @@
                                 </cells>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drag pieces to the grid. Swipe out of the grid to undo." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lMB-3L-0OJ">
-                                <rect key="frame" x="90" y="356" width="234" height="41"/>
+                                <rect key="frame" x="90" y="356" width="234" height="40.666666666666686"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -119,7 +119,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dvK-UQ-QSc">
-                                <rect key="frame" x="16" y="413" width="382" height="400"/>
+                                <rect key="frame" x="16" y="412.66666666666674" width="382" height="400"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ypn-Dd-5lj">
                                     <size key="itemSize" width="42" height="42"/>
@@ -185,7 +185,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AhE-VY-UDA">
-                                        <rect key="frame" x="105.5" y="258" width="39" height="70"/>
+                                        <rect key="frame" x="105.66666666666666" y="258" width="39" height="70"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="70" id="fQF-kk-rO2"/>
                                         </constraints>

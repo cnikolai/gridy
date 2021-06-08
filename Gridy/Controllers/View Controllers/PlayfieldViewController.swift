@@ -271,19 +271,17 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                                 //}
                        // else {
                         //    self.puzzle.boardImages[destinationIndex.row] = dragItem
-                       
-                        self.puzzle.boardImages.insert(dragItem, at: destinationIndex.row)
-                            boardCollectionView.insertItems(at: [destinationIndex])
-                        self.puzzle.boardImages.remove(at: self.puzzle.boardImages.count - 1)
-                       // self.boardCollectionView.reloadData()
-                        let lastIndex = boardCollectionView.indexPathsForVisibleItems.last
-                        self.boardCollectionView.deleteItems(at: [lastIndex!])
-                           // insert blank image where dragged image was and update collectionview
-                           //self.puzzle.piecesImages[sourceIndexPath.row] = blankImage
                         self.puzzle.piecesImages.remove(at: sourceIndexPath.row)
                         self.puzzle.piecesImages.insert(blankImage, at: sourceIndexPath.row)
-                           //piecesCollectionView.insertItems(at: [sourceIndexPath])
                         piecesCollectionView.reloadData()
+                        
+                        self.puzzle.boardImages.insert(dragItem, at: destinationIndex.row)
+                        boardCollectionView.insertItems(at: [destinationIndex])
+                        let row = destinationIndex.row + 1 == self.puzzle.boardImages.count ? destinationIndex.row : destinationIndex.row + 1
+                        let nextIndex = IndexPath(row: row, section: 0)
+                        self.puzzle.boardImages.remove(at: row)
+                        self.boardCollectionView.deleteItems(at: [nextIndex])
+                        boardCollectionView.reloadData()
                        }
                     })
                     //{ _ in

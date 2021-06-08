@@ -18,25 +18,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Gridy - App icon" translatesAutoresizingMaskIntoConstraints="NO" id="4LH-NP-i9b">
-                                <rect key="frame" x="25" y="74" width="364" height="371"/>
+                                <rect key="frame" x="25" y="44" width="364" height="441"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="300" id="iQZ-bj-dj9"/>
+                                </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Gridy-name-large-green.png" translatesAutoresizingMaskIntoConstraints="NO" id="grw-da-jJ0">
-                                <rect key="frame" x="43" y="464" width="328" height="120"/>
+                                <rect key="frame" x="43" y="509" width="328" height="75"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="120" id="BHD-h9-kfV"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="75" id="vPh-oC-ueF"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="4LH-NP-i9b" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="7m8-W1-Q0V"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="4LH-NP-i9b" secondAttribute="trailing" constant="25" id="AdY-OX-Vkm"/>
+                            <constraint firstItem="grw-da-jJ0" firstAttribute="top" secondItem="4LH-NP-i9b" secondAttribute="bottom" constant="24" id="DYn-Qp-rVj"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="grw-da-jJ0" secondAttribute="trailing" constant="43" id="QkA-2G-l66"/>
                             <constraint firstItem="grw-da-jJ0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="43" id="SuW-Ds-PLt"/>
-                            <constraint firstItem="grw-da-jJ0" firstAttribute="top" secondItem="4LH-NP-i9b" secondAttribute="bottom" constant="19" id="h7D-2p-QYr"/>
+                            <constraint firstItem="4LH-NP-i9b" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Xnj-qt-I3C"/>
                             <constraint firstItem="4LH-NP-i9b" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="25" id="nj3-Kc-RDg"/>
-                            <constraint firstItem="grw-da-jJ0" firstAttribute="top" secondItem="4LH-NP-i9b" secondAttribute="bottom" constant="19" id="qag-CO-goI"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="grw-da-jJ0" secondAttribute="bottom" constant="278" id="sHT-7A-Sif"/>
                         </constraints>
                     </view>
                 </viewController>
