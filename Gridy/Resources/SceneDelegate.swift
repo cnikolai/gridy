@@ -12,8 +12,52 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+//    func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
+//        return scene.userActivity
+//    }
+//    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+//        //define variable strings
+//        var storyBoard = ""
+//                var newViewController = ""
+//                if let storyBoardLoad = UserDefaults.standard.string(forKey: "storyBoard") {
+//                    storyBoard = storyBoardLoad // restore and set variables
+//                }
+//                if let newViewControllerLoad = UserDefaults.standard.string(forKey: "newViewController") {
+//                    newViewController = newViewControllerLoad
+//                }
+//               
+//                if !(storyBoard == "") && !(newViewController == "") { // check that the string is not empty then set main view controller
+//                    let storyboard : UIStoryboard = UIStoryboard(name: storyBoard, bundle: nil)
+//                   
+//                    let vc : UIViewController = storyboard.instantiateViewController(withIdentifier: newViewController)
+//                    self.window?.rootViewController = vc
+//                }
+        
+        
+        //present(newViewController, animated: true, completion: nil)
+        
+            if UserDefaults.standard.valueExists(forKey:"piecesImages") {
+                print("here")
+                let bundle = Bundle.main
+                let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+                var newViewController: UIViewController!
+                newViewController = storyboard.instantiateViewController(withIdentifier: "MainStoryboard")
+                // User has no defaults, open regular launch screen
+                let mainViewController = MainViewController()
+                self.window?.rootViewController = newViewController
+                self.window?.makeKeyAndVisible()
+                return
+            }
+            else {
+                print("here2")
+                // User has defaults saved locally, open playfield screen of app
+                let playfieldViewController = PlayfieldViewController()
+                self.window?.rootViewController = playfieldViewController
+                self.window?.makeKeyAndVisible()
+            }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

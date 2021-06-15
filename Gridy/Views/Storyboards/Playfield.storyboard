@@ -13,7 +13,7 @@
         <!--Playfield View Controller-->
         <scene sceneID="WOE-zA-R32">
             <objects>
-                <viewController storyboardIdentifier="PlayfieldViewController" id="ccx-qp-yw9" customClass="PlayfieldViewController" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PlayfieldViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ccx-qp-yw9" customClass="PlayfieldViewController" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="B2C-LA-9Ws">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

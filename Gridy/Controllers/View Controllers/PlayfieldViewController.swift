@@ -39,6 +39,10 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
     @IBOutlet weak var moves: UILabel!
     
     @IBAction func NewGame(_ sender: UIButton) {
+        // Remove Key-Value Pair
+        UserDefaults.standard.removeObject(forKey: "numMoves")
+        UserDefaults.standard.removeObject(forKey: "piecesImages")
+        UserDefaults.standard.removeObject(forKey: "boardImages")
         UIApplication.shared.windows.filter { $0.isKeyWindow }.first?.rootViewController!.dismiss(animated: true)
     }
 
@@ -70,10 +74,35 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
     
     // MARK:- Lifecycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        if UserDefaults.standard.valueExists(forKey:"piecesImages") {
+            if let piecesImages = try? UserDefaults.standard.images(forKey: "piecesImages") {
+                puzzle.piecesImages = piecesImages
+                print(piecesImages.count)  // 2
+            }
+        }
+        if UserDefaults.standard.valueExists(forKey:"boardImages") {
+            if let boardImages = try? UserDefaults.standard.images(forKey: "boardImages") {
+                puzzle.boardImages = boardImages
+                print(boardImages.count)  // 2
+            }
+        }
+    }
     override func viewDidLoad() {
+        // Remove Key-Value Pair
+        //UserDefaults.standard.removeObject(forKey: "numMoves")
         super.viewDidLoad()
         configure()
         addPlaceHolderImages()
+//        let storyBoard = self.storyboard?.value(forKey: "name") //get storyboard id
+//        let newViewController = self.restorationIdentifier //get identifier of view controller
+//        UserDefaults.standard.set(storyBoard, forKey: "storyBoard") // save to user defaults
+        //UserDefaults.standard.set(newViewController, forKey: "newViewController")
+        //view.addInteraction(UIDropInteraction(delegate: self))
+        if UserDefaults.standard.valueExists(forKey:"numMoves") {
+            numMoves = UserDefaults.standard.integer(forKey: "numMoves")
+            self.moves.text = String(describing: numMoves)
+        }
     }
     
     // MARK:- Helper Functions
@@ -94,8 +123,8 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         let nib = UINib(nibName: "PuzzleImageCell", bundle: nil)
         piecesCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
         boardCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
-        
     }
+    
     
     // Swipe action
     @objc private func handleSwipe(_ sender: UISwipeGestureRecognizer) {
@@ -112,7 +141,10 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
                 boardCollectionView.reloadData()
                 let indexToRemove = IndexPath.init(row: view.tag, section: 0)
                 piecesCollectionView.deleteItems(at: [indexToRemove])
+                piecesCollectionView.reloadData()
             }
+            try? UserDefaults.standard.set(images: puzzle.piecesImages, forKey: "piecesImages")
+            try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
         }
     }
     
@@ -131,7 +163,25 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         piecesCollectionView.reloadData()
         boardCollectionView.reloadData()
     }
-}
+    
+//    override func encodeRestorableState(with coder: NSCoder) {
+//        super.encodeRestorableState(with: coder)
+//        coder.encode(numMoves, forKey: "numMoves")
+//        print("here")
+//        //coder.encode(numMoves, forKey: PlayfieldViewController.restoreProductKey)
+//    }
+//
+//    override func decodeRestorableState(with coder: NSCoder) {
+//        super.decodeRestorableState(with: coder)
+//        self.numMoves = coder.decodeObject(forKey: "numMoves") as? Int ?? 0
+//        print(numMoves)
+////        guard let decodedProductIdentifier =
+////            coder.decodeObject(forKey: PlayfieldViewController.restoreProductKey) as? String else {
+////            fatalError("A product did not exist in the restore. In your app, handle this gracefully.")
+////        }
+////        product = DataModelManager.sharedInstance.product(fromIdentifier: decodedProductIdentifier)
+//    }
+}//end of class
 
 // MARK: - UICollectionViewDataSource
 extension PlayfieldViewController: UICollectionViewDataSource {
@@ -170,6 +220,7 @@ extension PlayfieldViewController: UICollectionViewDataSource {
     
     func updateNumMoves(numMoves:Int) {
         self.moves.text = String(describing: numMoves)
+        UserDefaults.standard.set(numMoves, forKey: "numMoves")
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -273,6 +324,7 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                         //    self.puzzle.boardImages[destinationIndex.row] = dragItem
                         self.puzzle.piecesImages.remove(at: sourceIndexPath.row)
                         self.puzzle.piecesImages.insert(blankImage, at: sourceIndexPath.row)
+                        try? UserDefaults.standard.set(images: puzzle.piecesImages, forKey: "piecesImages")
                         piecesCollectionView.reloadData()
                         
                         self.puzzle.boardImages.insert(dragItem, at: destinationIndex.row)
@@ -281,6 +333,7 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                         let nextIndex = IndexPath(row: row, section: 0)
                         self.puzzle.boardImages.remove(at: row)
                         self.boardCollectionView.deleteItems(at: [nextIndex])
+                        try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
                         boardCollectionView.reloadData()
                        }
                     })
@@ -328,4 +381,42 @@ func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate ses
            return UICollectionViewDropProposal(operation: .forbidden)
        }
    }
+}
+
+extension UserDefaults {
+
+    func valueExists(forKey key: String) -> Bool {
+        return object(forKey: key) != nil
+    }
+
+    func set(image: UIImage?, quality: CGFloat = 0.5, forKey defaultName: String) {
+            guard let image = image else {
+                set(nil, forKey: defaultName)
+                return
+            }
+            set(image.jpegData(compressionQuality: quality), forKey: defaultName)
+        }
+    
+    func image(forKey defaultName:String) -> UIImage? {
+            guard
+                let data = data(forKey: defaultName),
+                let image = UIImage(data: data)
+            else  { return nil }
+            return image
+        }
+
+    func set(images value: [UIImage]?, forKey defaultName: String) throws {
+            guard let value = value else {
+                removeObject(forKey: defaultName)
+                return
+            }
+            try set(NSKeyedArchiver.archivedData(withRootObject: value, requiringSecureCoding: false), forKey: defaultName)
+        }
+    
+    func images(forKey defaultName: String) throws -> [UIImage] {
+            guard let data = data(forKey: defaultName) else { return [] }
+
+            let object = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data)
+            return object as? [UIImage] ?? []
+        }
 }

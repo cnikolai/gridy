@@ -93,8 +93,21 @@ class ImageEditorViewController: UIViewController {
         super.viewDidLoad()
 
         configure()
+//        let storyBoard = self.storyboard?.value(forKey: "name") //get storyboard id
+//        let newViewController = self.restorationIdentifier //get identifier of view controller
+//        UserDefaults.standard.set(storyBoard, forKey: "storyBoard") // save to user defaults
+//        UserDefaults.standard.set(newViewController, forKey: "newViewController")
     }
-}
+    
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+    }
+    
+    override func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
+    }
+
+}//end of class
 
 // MARK:- Simultaneous GestureRecognizer
 
@@ -113,4 +126,5 @@ extension ImageEditorViewController: UIGestureRecognizerDelegate {
 
             return true
     }
+    
 }

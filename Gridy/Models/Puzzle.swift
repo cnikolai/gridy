@@ -20,6 +20,7 @@ class Puzzle {
         self.solvedImage = Image
         self.solvedImages = solvedImage.slice(into: 2)
         self.piecesImages = solvedImages.shuffled()
+        //try? UserDefaults.standard.set(images: piecesImages, forKey: "piecesImages")
     }
 }
 

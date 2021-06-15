@@ -45,6 +45,10 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
        
     override func viewDidLoad() {
         super.viewDidLoad()
+//        let storyBoard = self.storyboard?.value(forKey: "name") //get storyboard id
+//        let newViewController = self.restorationIdentifier //get identifier of view controller
+//        UserDefaults.standard.set(storyBoard, forKey: "storyBoard") // save to user defaults
+//        UserDefaults.standard.set(newViewController, forKey: "newViewController")
     }
     
     // MARK:- Helper functions
@@ -165,5 +169,12 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         viewController.modalPresentationStyle = .fullScreen
         present(viewController, animated: true)
     }
-
+    
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+    }
+    
+    override func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
+    }
 }
