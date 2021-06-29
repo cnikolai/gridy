@@ -43,6 +43,7 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         UserDefaults.standard.removeObject(forKey: "numMoves")
         UserDefaults.standard.removeObject(forKey: "piecesImages")
         UserDefaults.standard.removeObject(forKey: "boardImages")
+        UserDefaults.standard.removeObject(forKey: "creation")
         UIApplication.shared.windows.filter { $0.isKeyWindow }.first?.rootViewController!.dismiss(animated: true)
     }
 
@@ -75,22 +76,19 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
     // MARK:- Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if UserDefaults.standard.valueExists(forKey:"piecesImages") {
             if let piecesImages = try? UserDefaults.standard.images(forKey: "piecesImages") {
                 puzzle.piecesImages = piecesImages
-                print(piecesImages.count)  // 2
             }
         }
         if UserDefaults.standard.valueExists(forKey:"boardImages") {
             if let boardImages = try? UserDefaults.standard.images(forKey: "boardImages") {
                 puzzle.boardImages = boardImages
-                print(boardImages.count)  // 2
             }
         }
     }
     override func viewDidLoad() {
-        // Remove Key-Value Pair
-        //UserDefaults.standard.removeObject(forKey: "numMoves")
         super.viewDidLoad()
         configure()
         addPlaceHolderImages()
@@ -107,18 +105,17 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
     
     // MARK:- Helper Functions
     func configure() {
-       
+        piecesCollectionView.dragInteractionEnabled = true
         piecesCollectionView.dataSource = self
         piecesCollectionView.delegate = self
         piecesCollectionView.dragDelegate = self
         piecesCollectionView.dropDelegate = self
-        piecesCollectionView.dragInteractionEnabled = true
         
+        boardCollectionView.dragInteractionEnabled = true
         boardCollectionView.dataSource = self
         boardCollectionView.delegate = self
         boardCollectionView.dragDelegate = self
         boardCollectionView.dropDelegate = self
-        boardCollectionView.dragInteractionEnabled = true
 
         let nib = UINib(nibName: "PuzzleImageCell", bundle: nil)
         piecesCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
@@ -142,9 +139,10 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
                 let indexToRemove = IndexPath.init(row: view.tag, section: 0)
                 piecesCollectionView.deleteItems(at: [indexToRemove])
                 piecesCollectionView.reloadData()
+                try? UserDefaults.standard.set(images: puzzle.piecesImages, forKey: "piecesImages")
+                try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
             }
-            try? UserDefaults.standard.set(images: puzzle.piecesImages, forKey: "piecesImages")
-            try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
+            
         }
     }
     
@@ -163,24 +161,6 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         piecesCollectionView.reloadData()
         boardCollectionView.reloadData()
     }
-    
-//    override func encodeRestorableState(with coder: NSCoder) {
-//        super.encodeRestorableState(with: coder)
-//        coder.encode(numMoves, forKey: "numMoves")
-//        print("here")
-//        //coder.encode(numMoves, forKey: PlayfieldViewController.restoreProductKey)
-//    }
-//
-//    override func decodeRestorableState(with coder: NSCoder) {
-//        super.decodeRestorableState(with: coder)
-//        self.numMoves = coder.decodeObject(forKey: "numMoves") as? Int ?? 0
-//        print(numMoves)
-////        guard let decodedProductIdentifier =
-////            coder.decodeObject(forKey: PlayfieldViewController.restoreProductKey) as? String else {
-////            fatalError("A product did not exist in the restore. In your app, handle this gracefully.")
-////        }
-////        product = DataModelManager.sharedInstance.product(fromIdentifier: decodedProductIdentifier)
-//    }
 }//end of class
 
 // MARK: - UICollectionViewDataSource
@@ -214,7 +194,8 @@ extension PlayfieldViewController: UICollectionViewDataSource {
             cell.imageView.isUserInteractionEnabled = true
             cell.imageView.tag = indexPath.row
         }
-
+        //try? UserDefaults.standard.set(images: puzzle.piecesImages, forKey: "piecesImages")
+        //try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
         return cell
     }
     
@@ -263,19 +244,6 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - UICollectionViewDragDelegate, UICollectionViewDropDelegate
 extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionViewDropDelegate, UIDropInteractionDelegate {
-   
-//    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
-//        return "The pig is in the poke"
-//    }
-//
-//    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
-//        if activityType == .postToTwitter {
-//                return "Download #MyAwesomeApp via @twostraws."
-//            } else {
-//                return "Download MyAwesomeApp from TwoStraws."
-//            }
-//    }
-    
     
     // the items that start the drag process at an index
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
@@ -287,9 +255,13 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                 let itemProvider = NSItemProvider(object: image as UIImage)
                 let dragItem = UIDragItem(itemProvider: itemProvider)
                 dragItem.localObject = image
+                //try? UserDefaults.standard.set(images: puzzle.piecesImages, forKey: "piecesImages")
+                //try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
                 return [dragItem]
             }
         }
+        //try? UserDefaults.standard.set(images: puzzle.piecesImages, forKey: "piecesImages")
+        //try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
         return []
     }
     
@@ -303,7 +275,6 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
     
     // what will happen when you drop the item
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
-        
         if let destinationIndex = coordinator.destinationIndexPath {
             if destinationIndex.row >= puzzle.solvedImages.count {
                 return
@@ -315,42 +286,43 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                         // get the dragged image
                         let dragItem = item?.dragItem.localObject as! UIImage
                         // check if destination has blank image
-                       if puzzle.boardImages[destinationIndex.item] == blankImage {
-                           // replace destination image with dragged image and update collectionview
-                        //if puzzle.boardImages.count == 1 {
-                            //boardCollectionView.reloadData()
-                                //}
-                       // else {
-                        //    self.puzzle.boardImages[destinationIndex.row] = dragItem
-                        self.puzzle.piecesImages.remove(at: sourceIndexPath.row)
-                        self.puzzle.piecesImages.insert(blankImage, at: sourceIndexPath.row)
-                        try? UserDefaults.standard.set(images: puzzle.piecesImages, forKey: "piecesImages")
-                        piecesCollectionView.reloadData()
-                        
-                        self.puzzle.boardImages.insert(dragItem, at: destinationIndex.row)
-                        boardCollectionView.insertItems(at: [destinationIndex])
-                        let row = destinationIndex.row + 1 == self.puzzle.boardImages.count ? destinationIndex.row : destinationIndex.row + 1
-                        let nextIndex = IndexPath(row: row, section: 0)
-                        self.puzzle.boardImages.remove(at: row)
-                        self.boardCollectionView.deleteItems(at: [nextIndex])
-                        try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
-                        boardCollectionView.reloadData()
-                       }
-                    })
-                    //{ _ in
-                        //let indexPath = IndexPath(puzzle.boardImages.last)
-                       
-                       // self.boardCollectionView.deleteItems(at: [IndexPath(row: destinationIndex.row + 1, section: 0)])
-                        //}
-                   // }
-//                    collectionView.performBatchUpdates {
-//
-//                    }
+                        if puzzle.boardImages[destinationIndex.item] == blankImage {
+                            self.puzzle.boardImages.insert(dragItem, at: destinationIndex.row)
+                            //try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
+                            boardCollectionView.insertItems(at: [destinationIndex])
+                            //try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
 
+                            self.puzzle.piecesImages.remove(at: sourceIndexPath.row)
+                            self.puzzle.piecesImages.insert(blankImage, at: sourceIndexPath.row)
+                            try? UserDefaults.standard.set(images: puzzle.piecesImages, forKey: "piecesImages")
+                            //try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
+                            piecesCollectionView.reloadData()
+                        }
+                        //try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
+                    })
                     
+                    collectionView.performBatchUpdates({
+                        var row: Int
+                        let boardImagesInUserDefaults = UserDefaults.standard.valueExists(forKey:"boardImages")
+                        if (!boardImagesInUserDefaults) {
+                           row = destinationIndex.row + 1 == self.puzzle.boardImages.count
+                            ? destinationIndex.row
+                            : destinationIndex.row + 1
+                        }else {
+                            row = destinationIndex.row
+                        }
+                        self.puzzle.boardImages.remove(at: row)
+                        let nextIndex = IndexPath(row: row, section: 0)
+                        boardCollectionView.deleteItems(at: [nextIndex])
+                        boardCollectionView.reloadData()
+                        try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
+                    })
+
                     coordinator.drop(item!.dragItem, toItemAt: destinationIndex)
-                        numMoves+=1
-                        updateNumMoves(numMoves: numMoves)
+                    numMoves+=1
+                    updateNumMoves(numMoves: numMoves)
+                    //try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
+
                     if (self.puzzle.solvedImages == self.puzzle.boardImages) {
                         //end the game
                         let alertController = UIAlertController(title: "You Won!", message: "Congratulations", preferredStyle: .alert)
@@ -367,6 +339,13 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                 }
             }
         }
+        //try? UserDefaults.standard.set(images: puzzle.piecesImages, forKey: "piecesImages")
+        //try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
+        //let snapshot = UIGraphicsGetImageFromCurrentImageContext()
+        //try? UserDefaults.standard.set(image: snapshot!, forKey: "creation")
+//        let snapshot = UIGraphicsGetImageFromCurrentImageContext()
+//        UIGraphicsEndImageContext()
+        //try? UserDefaults.standard.set(image: creation.image, forKey: "creation")
     }
 
 func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
@@ -419,4 +398,27 @@ extension UserDefaults {
             let object = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data)
             return object as? [UIImage] ?? []
         }
+    
+    func save<T:Encodable>(customObject object: T, inKey key: String) {
+           let encoder = JSONEncoder()
+           if let encoded = try? encoder.encode(object) {
+               self.set(encoded, forKey: key)
+           }
+       }
+
+       func retrieve<T:Decodable>(object type:T.Type, fromKey key: String) -> T? {
+           if let data = self.data(forKey: key) {
+               let decoder = JSONDecoder()
+               if let object = try? decoder.decode(type, from: data) {
+                   return object
+               }else {
+                   print("Couldnt decode object")
+                   return nil
+               }
+           }else {
+               print("Couldnt find key")
+               return nil
+           }
+       
+    }
 }

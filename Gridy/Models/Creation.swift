@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-class Creation {
+class Creation: Codable {
+    
     var image: UIImage
     
     static var defaultImage: UIImage {
@@ -24,5 +25,30 @@ class Creation {
     init(image: UIImage) {
         // stored property initialization
         self.image = image
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var values = encoder.container(keyedBy: CodingKeys.self)
+        guard let data = image.pngData() else { return }
+        try values.encode(data, forKey: .image)
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        let data = try values.decode(Data.self, forKey: .image)
+        image = UIImage(data: data)!
+    }
+        public struct SomeImage: Codable {
+            
+            public let photo: Data
+            
+            public init(photo: UIImage) {
+                self.photo = photo.pngData()!
+            }
+        }
+    
+    
+    enum CodingKeys: String, CodingKey {
+        case image
     }
 }

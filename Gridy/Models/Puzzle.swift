@@ -10,8 +10,16 @@ import UIKit
 import Foundation
 
 class Puzzle {
-    var piecesImages: [UIImage]
-    var boardImages: [UIImage] = []
+    var piecesImages: [UIImage] {
+        didSet {
+            print(piecesImages.count,"piecesImages count")
+        }
+    }
+    var boardImages: [UIImage] = [] {
+        didSet {
+            print(boardImages.count,"boardImages count")
+        }
+    }
 
     let solvedImages: [UIImage]
     let solvedImage: UIImage

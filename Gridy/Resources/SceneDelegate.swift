@@ -39,25 +39,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         //present(newViewController, animated: true, completion: nil)
         
-            if UserDefaults.standard.valueExists(forKey:"piecesImages") {
-                print("here")
-                let bundle = Bundle.main
-                let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-                var newViewController: UIViewController!
-                newViewController = storyboard.instantiateViewController(withIdentifier: "MainStoryboard")
-                // User has no defaults, open regular launch screen
-                let mainViewController = MainViewController()
-                self.window?.rootViewController = newViewController
-                self.window?.makeKeyAndVisible()
-                return
-            }
-            else {
-                print("here2")
-                // User has defaults saved locally, open playfield screen of app
-                let playfieldViewController = PlayfieldViewController()
-                self.window?.rootViewController = playfieldViewController
-                self.window?.makeKeyAndVisible()
-            }
+//            if UserDefaults.standard.valueExists(forKey:"piecesImages") {
+//                print("here")
+//                let bundle = Bundle.main
+//                let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+//                var newViewController: UIViewController!
+//                newViewController = storyboard.instantiateViewController(withIdentifier: "MainStoryboard")
+//                // User has no defaults, open regular launch screen
+//                let mainViewController = MainViewController()
+//                self.window?.rootViewController = newViewController
+//                self.window?.makeKeyAndVisible()
+//                return
+//            }
+//            else {
+//                print("here2")
+//                // User has defaults saved locally, open playfield screen of app
+//                let playfieldViewController = PlayfieldViewController()
+//                self.window?.rootViewController = playfieldViewController
+//                self.window?.makeKeyAndVisible()
+//            }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -70,6 +70,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        if !UserDefaults.standard.valueExists(forKey:"piecesImages") {
+                print("here")
+                let bundle = Bundle.main
+                let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+                var newViewController: UIViewController!
+                newViewController = storyboard.instantiateViewController(withIdentifier: "MainStoryboard")
+                // User has no defaults, open regular launch screen
+                //let mainViewController = MainViewController()
+                self.window?.rootViewController = newViewController
+                self.window?.makeKeyAndVisible()
+                return
+            }
+            else {
+                print("here2")
+                //if let creation = UserDefaults.standard.object(forKey: "creation") {
+                if let creationImage = UserDefaults.standard.image(forKey: "creation") {
+                    //print(window,"this is the window")
+                    let storyboard = UIStoryboard(name: "Playfield", bundle: nil)
+                    let viewController = storyboard.instantiateViewController(withIdentifier: "PlayfieldViewController") as! PlayfieldViewController
+                    let creation = Creation(image: creationImage)
+                    viewController.creation = creation
+                    viewController.modalPresentationStyle = .fullScreen
+                    //print(viewController,"this is the view controller")
+                    self.window?.rootViewController = viewController
+                    self.window?.makeKeyAndVisible()
+                }
+            }
     }
 
     func sceneWillResignActive(_ scene: UIScene) {

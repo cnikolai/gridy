@@ -10,14 +10,6 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-//    func application(_ application: UIApplication, shouldSaveSecureApplicationState coder: NSCoder) -> Bool {
-//        return true
-//    }
-//
-//    func application(_ application: UIApplication, shouldRestoreSecureApplicationState coder: NSCoder) -> Bool {
-//      return true
-//    }
     
     // For non-scene-based versions of this app on iOS 13.1 and earlier.
     func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
@@ -54,6 +46,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         //self.window = UIWindow(frame: UIScreen.main.bounds)
+//        let window = UIWindow(frame: UIScreen.main.bounds)
+//        if UserDefaults.standard.valueExists(forKey:"piecesImages") {
+//            print("here")
+//            let bundle = Bundle.main
+//            let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+//            var newViewController: UIViewController!
+//            newViewController = storyboard.instantiateViewController(withIdentifier: "MainStoryboard")
+//            // User has no defaults, open regular launch screen
+//            let mainViewController = MainViewController()
+//            window?.rootViewController = newViewController
+//            window?.makeKeyAndVisible()
+//            return true
+//        }
+//        else {
+//            print("here2")
+//            // User has defaults saved locally, open playfield screen of app
+//            let playfieldViewController = PlayfieldViewController()
+//            window?.rootViewController = playfieldViewController
+//            window?.makeKeyAndVisible()
+//        }
         return true
     }
 

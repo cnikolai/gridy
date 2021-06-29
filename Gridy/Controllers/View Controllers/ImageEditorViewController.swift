@@ -26,13 +26,6 @@ class ImageEditorViewController: UIViewController {
         presentPlayfieldViewController()
     }
     
-//    @IBAction func pinchGestureRecognizerTapped(_ sender: UIPinchGestureRecognizer) {
-//        creationImageView.transform = creationImageView.transform.scaledBy(x: sender.scale, y: sender.scale)
-//        sender.scale = 1
-//    }
-    
-    
-    
     @objc func moveImageView(_ sender: UIPanGestureRecognizer) {
         print("inside panGestureRecognizer")
         let translation = sender.translation(in: creationFrame.superview)
@@ -84,6 +77,10 @@ class ImageEditorViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Playfield", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "PlayfieldViewController") as! PlayfieldViewController
         viewController.creation = Creation(image:snapshot!)
+/*to do**/
+        //try? UserDefaults.standard.set(image: snapshot!, forKey: "creation")
+        //snapshot = UIGraphicsGetImageFromCurrentImageContext()
+        //try? UserDefaults.standard.set(image: snapshot!, forKey: "creation")
         viewController.modalPresentationStyle = .fullScreen
         present(viewController, animated: true)
     }
@@ -119,12 +116,7 @@ extension ImageEditorViewController: UIGestureRecognizerDelegate {
         if gestureRecognizer is UIPanGestureRecognizer || otherGestureRecognizer is UIPanGestureRecognizer {
             return false
         }
-            // simultaneous gesture recognition will only be supported for creationImageView
-//            if gestureRecognizer.view != creationImageView {
-//                return false
-//            }
-
-            return true
+        return true
     }
     
 }
