@@ -10,6 +10,7 @@ import UIKit
 import Foundation
 
 class Puzzle {
+    
     var piecesImages: [UIImage] {
         didSet {
             print(piecesImages.count,"piecesImages count")
@@ -26,8 +27,29 @@ class Puzzle {
     
     init(Image: UIImage) {
         self.solvedImage = Image
-        self.solvedImages = solvedImage.slice(into: 2)
-        self.piecesImages = solvedImages.shuffled()
+        
+        if UserDefaults.standard.valueExists(forKey:"solvedImages"),
+           let solvedImages = try? UserDefaults.standard.images(forKey: "solvedImages") {
+            self.solvedImages = solvedImages
+        } else {
+            let solvedImages = solvedImage.slice(into: 2)
+            try? UserDefaults.standard.set(images: solvedImages, forKey: "solvedImages")
+            self.solvedImages = solvedImages
+        }
+        
+        if UserDefaults.standard.valueExists(forKey:"piecesImages"),
+           let piecesImages = try? UserDefaults.standard.images(forKey: "piecesImages") {
+            self.piecesImages = piecesImages
+        } else {
+            self.piecesImages = solvedImages.shuffled()
+        }
+        
+        if UserDefaults.standard.valueExists(forKey:"boardImages"),
+           let boardImages = try? UserDefaults.standard.images(forKey: "boardImages") {
+            self.boardImages = boardImages
+        } else {
+            self.boardImages = []
+        }
         //try? UserDefaults.standard.set(images: piecesImages, forKey: "piecesImages")
     }
 }
