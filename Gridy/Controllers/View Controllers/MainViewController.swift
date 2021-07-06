@@ -49,6 +49,23 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
 //        let newViewController = self.restorationIdentifier //get identifier of view controller
 //        UserDefaults.standard.set(storyBoard, forKey: "storyBoard") // save to user defaults
 //        UserDefaults.standard.set(newViewController, forKey: "newViewController")
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if UserDefaults.standard.valueExists(forKey:"piecesImages") {
+            if let creationImage = UserDefaults.standard.image(forKey: "creation") {
+                //print(window,"this is the window")
+                let storyboard = UIStoryboard(name: "Playfield", bundle: nil)
+                let viewController = storyboard.instantiateViewController(withIdentifier: "PlayfieldViewController") as! PlayfieldViewController
+                let creation = Creation(image: creationImage)
+                viewController.creation = creation
+                viewController.modalPresentationStyle = .fullScreen
+                present(viewController, animated: true)
+            }
+        }
     }
     
     // MARK:- Helper functions

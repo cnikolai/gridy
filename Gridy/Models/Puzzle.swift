@@ -10,6 +10,7 @@ import UIKit
 import Foundation
 
 class Puzzle {
+    
     var piecesImages: [UIImage] {
         didSet {
             print(piecesImages.count,"piecesImages count")

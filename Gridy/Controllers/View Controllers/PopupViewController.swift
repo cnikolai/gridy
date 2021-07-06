@@ -18,7 +18,11 @@ class PopupViewController: UIViewController {
     
     // MARK:- IBOutlets
     
-    @IBOutlet weak var hintPicture: UIImageView!
+    @IBOutlet weak var hintPicture: UIImageView! {
+        didSet {
+            hintPicture.contentMode = .scaleAspectFit
+        }
+    }
    
     // MARK: - Local Variables
     
