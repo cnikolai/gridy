@@ -28,12 +28,6 @@ extension UIImage {
     }
 }
 
-extension UIImage: Equatable {
-    static func ==(lhs: UIImage, rhs: UIImage) -> Bool {
-        return lhs.pngData() == rhs.pngData()
-    }
-}
-
 extension Array where Element: UIImage {
     static func ==(lhs: [UIImage], rhs: [UIImage]) -> Bool {
         var results: [UIImage] = []
@@ -185,7 +179,7 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         if sender.direction == UISwipeGestureRecognizer.Direction.up {
             if let view = sender.view as? UIImageView {
                 //if sender is not a blank cell
-                if (view != blankImage) {
+                if (view.image != blankImage) {
                 numMoves+=1
                 updateNumMoves(numMoves: numMoves)
                 puzzle.boardImages.remove(at: view.tag)
@@ -233,11 +227,9 @@ extension PlayfieldViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == piecesCollectionView {
             return puzzle.piecesImages.count
-            print("===count1",puzzle.piecesImages.count)
         }
         if collectionView == boardCollectionView {
             return puzzle.boardImages.count
-            print("===count2",puzzle.boardImages.count)
         }
         return 0
     }
@@ -337,6 +329,8 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
     // what will happen when you drop the item
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
         if let destinationIndex = coordinator.destinationIndexPath {
+            guard puzzle.boardImages[destinationIndex.item] == blankImage else {
+                return }
             if destinationIndex.row >= puzzle.solvedImages.count {
                 return
             } else if collectionView == boardCollectionView {
@@ -346,8 +340,11 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                     collectionView.performBatchUpdates ({
                         // get the dragged image
                         let dragItem = item?.dragItem.localObject as! UIImage
+//                        guard puzzle.boardImages[destinationIndex.item] == blankImage else {
+//                            print("here")
+//                            return }
                         // check if destination has blank image
-                        if puzzle.boardImages[destinationIndex.item] == blankImage {
+                        //if puzzle.boardImages[destinationIndex.item] == blankImage {
                             self.puzzle.boardImages.insert(dragItem, at: destinationIndex.row)
                             //try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
                             boardCollectionView.insertItems(at: [destinationIndex])
@@ -356,11 +353,10 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                             self.puzzle.piecesImages.remove(at: sourceIndexPath.row)
                             self.puzzle.piecesImages.insert(blankImage, at: sourceIndexPath.row)
                             try? UserDefaults.standard.set(images: puzzle.piecesImages, forKey: "piecesImages")
-                            print("saved piecesImages board")
                             //UserDefaults.standard.set(image: creation.image, forKey: "creation")
                             //try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
                             piecesCollectionView.reloadData()
-                        }
+                        //}
                         //try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
                     })
                     
@@ -380,7 +376,6 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                         boardCollectionView.reloadData()
                         try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
                         //UserDefaults.standard.set(image: creation.image, forKey: "creation")
-                        print("saved boardImages board")
                     })
 
                     coordinator.drop(item!.dragItem, toItemAt: destinationIndex)

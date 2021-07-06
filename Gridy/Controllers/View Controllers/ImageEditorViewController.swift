@@ -77,8 +77,7 @@ class ImageEditorViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Playfield", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "PlayfieldViewController") as! PlayfieldViewController
         viewController.creation = Creation(image:snapshot!)
-/*to do**/
-        try? UserDefaults.standard.set(image: snapshot!, forKey: "creation")
+        UserDefaults.standard.set(image: snapshot!, forKey: "creation")
         //snapshot = UIGraphicsGetImageFromCurrentImageContext()
         //try? UserDefaults.standard.set(image: snapshot!, forKey: "creation")
         viewController.modalPresentationStyle = .fullScreen
