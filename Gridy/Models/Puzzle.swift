@@ -26,7 +26,7 @@ class Puzzle {
     
     init(Image: UIImage) {
         self.solvedImage = Image
-        self.solvedImages = solvedImage.slice(into: 2)
+        self.solvedImages = solvedImage.slice(into: 4)
         self.piecesImages = solvedImages.shuffled()
         //try? UserDefaults.standard.set(images: piecesImages, forKey: "piecesImages")
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
@@ -14,17 +14,17 @@
             <objects>
                 <viewController storyboardIdentifier="LaunchScreenStoryboard" useStoryboardIdentifierAsRestorationIdentifier="YES" id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Gridy - App icon" translatesAutoresizingMaskIntoConstraints="NO" id="4LH-NP-i9b">
-                                <rect key="frame" x="25" y="44" width="364" height="441"/>
+                                <rect key="frame" x="25" y="44" width="378" height="471"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="300" id="iQZ-bj-dj9"/>
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Gridy-name-large-green.png" translatesAutoresizingMaskIntoConstraints="NO" id="grw-da-jJ0">
-                                <rect key="frame" x="43" y="509" width="328" height="75"/>
+                                <rect key="frame" x="43" y="539" width="342" height="75"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="75" id="vPh-oC-ueF"/>
                                 </constraints>

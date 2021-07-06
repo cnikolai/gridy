@@ -87,6 +87,13 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
                 puzzle.boardImages = boardImages
             }
         }
+//        if UserDefaults.standard.valueExists(forKey:"creation") {
+//            if let creationimage = UserDefaults.standard.image(forKey: "creation") {
+//                creation.image = creationimage
+//            }
+//        } else {
+//            UserDefaults.standard.set(image: creation.image, forKey: "creation")
+//        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,6 +148,7 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
                 piecesCollectionView.reloadData()
                 try? UserDefaults.standard.set(images: puzzle.piecesImages, forKey: "piecesImages")
                 try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
+                //UserDefaults.standard.set(image: creation.image, forKey: "creation")
             }
             
         }
@@ -219,7 +227,8 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
         }
         else {
             let width = boardCollectionView.frame.size.width/CGFloat(puzzle.boardImages.count).squareRoot()
-            return CGSize(width: width, height: width)        }
+            return CGSize(width: width, height: width)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -230,16 +239,6 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
                    return 0
                }
     }
-   
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        if collectionView == piecesCollectionView {
-              return 5
-               }
-               else {
-                  return 0
-               }
-    }
-    
 }
 
 // MARK: - UICollectionViewDragDelegate, UICollectionViewDropDelegate
@@ -295,6 +294,8 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                             self.puzzle.piecesImages.remove(at: sourceIndexPath.row)
                             self.puzzle.piecesImages.insert(blankImage, at: sourceIndexPath.row)
                             try? UserDefaults.standard.set(images: puzzle.piecesImages, forKey: "piecesImages")
+                            print("saved piecesImages board")
+                            //UserDefaults.standard.set(image: creation.image, forKey: "creation")
                             //try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
                             piecesCollectionView.reloadData()
                         }
@@ -302,26 +303,31 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
                     })
                     
                     collectionView.performBatchUpdates({
-                        var row: Int
-                        let boardImagesInUserDefaults = UserDefaults.standard.valueExists(forKey:"boardImages")
-                        if (!boardImagesInUserDefaults) {
-                           row = destinationIndex.row + 1 == self.puzzle.boardImages.count
+                        //var row: Int
+                        //let boardImagesInUserDefaults = UserDefaults.standard.valueExists(forKey:"boardImages")
+                        //if (!boardImagesInUserDefaults) {
+                          let row = destinationIndex.row + 1 == self.puzzle.boardImages.count
                             ? destinationIndex.row
                             : destinationIndex.row + 1
-                        }else {
-                            row = destinationIndex.row
-                        }
+                        //}else {
+                        //    row = destinationIndex.row
+                       // }
                         self.puzzle.boardImages.remove(at: row)
                         let nextIndex = IndexPath(row: row, section: 0)
                         boardCollectionView.deleteItems(at: [nextIndex])
                         boardCollectionView.reloadData()
                         try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
+                        //UserDefaults.standard.set(image: creation.image, forKey: "creation")
+                        print("saved boardImages board")
                     })
 
                     coordinator.drop(item!.dragItem, toItemAt: destinationIndex)
                     numMoves+=1
                     updateNumMoves(numMoves: numMoves)
+                    //try? UserDefaults.standard.set(images: puzzle.piecesImages, forKey: "piecesImages")
                     //try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
+                    //UserDefaults.standard.set(image: creation.image, forKey: "creation")
+
 
                     if (self.puzzle.solvedImages == self.puzzle.boardImages) {
                         //end the game
@@ -341,11 +347,7 @@ extension PlayfieldViewController: UICollectionViewDragDelegate, UICollectionVie
         }
         //try? UserDefaults.standard.set(images: puzzle.piecesImages, forKey: "piecesImages")
         //try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
-        //let snapshot = UIGraphicsGetImageFromCurrentImageContext()
-        //try? UserDefaults.standard.set(image: snapshot!, forKey: "creation")
-//        let snapshot = UIGraphicsGetImageFromCurrentImageContext()
-//        UIGraphicsEndImageContext()
-        //try? UserDefaults.standard.set(image: creation.image, forKey: "creation")
+        //UserDefaults.standard.set(image: creation.image, forKey: "creation")
     }
 
 func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
@@ -412,11 +414,11 @@ extension UserDefaults {
                if let object = try? decoder.decode(type, from: data) {
                    return object
                }else {
-                   print("Couldnt decode object")
+                   print("Couldn't decode object")
                    return nil
                }
            }else {
-               print("Couldnt find key")
+               print("Couldn't find key")
                return nil
            }
        

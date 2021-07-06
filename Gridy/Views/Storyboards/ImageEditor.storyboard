@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5lq-FR-l6S">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
@@ -14,11 +14,11 @@
             <objects>
                 <viewController storyboardIdentifier="ImageEditorViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5lq-FR-l6S" customClass="ImageEditorViewController" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="ZCd-cu-SkI">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JX2-9j-icS" userLabel="Container View">
-                                <rect key="frame" x="82" y="121" width="250" height="250"/>
+                                <rect key="frame" x="35" y="97" width="250" height="250"/>
                                 <subviews>
                                     <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yfE-b5-0ii" customClass="GridView" customModule="Gridy" customModuleProvider="target">
                                         <rect key="frame" x="2" y="3" width="244" height="244"/>
@@ -40,13 +40,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="Adjust the Puzzle Image: Zoom, Rotate, Reposition" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nD3-gU-XCc">
-                                <rect key="frame" x="95" y="60" width="224" height="41"/>
+                                <rect key="frame" x="95" y="16" width="130" height="61"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iei-L9-PSN">
-                                <rect key="frame" x="154.5" y="391" width="105" height="50"/>
+                                <rect key="frame" x="107.5" y="367" width="105" height="50"/>
                                 <color key="backgroundColor" red="0.02617239021" green="0.74694126839999997" blue="0.72039812800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="YAT-9L-k0x"/>
