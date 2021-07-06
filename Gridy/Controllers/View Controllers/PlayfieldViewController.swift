@@ -101,6 +101,18 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
     }
     
     // MARK:- Lifecycle
+//    override var contentSize:CGSize {
+//            didSet {
+//                invalidateIntrinsicContentSize()
+//            }
+//        }
+//
+//        override var intrinsicContentSize: CGSize {
+//            layoutIfNeeded()
+//            return CGSize(width: UIView.noIntrinsicMetric, height: collectionViewLayout.collectionViewContentSize.height)
+//        }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -116,7 +128,21 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
 //        } else {
 //            UserDefaults.standard.set(image: creation.image, forKey: "creation")
 //        }
+//        piecesCollectionView.setNeedsLayout()
+//        piecesCollectionView.layoutIfNeeded()
     }
+    
+//    var contentSize: CGSize {
+//         didSet {
+//             invalidateIntrinsicContentSize()
+//         }
+//     }
+
+    var intrinsicContentSize: CGSize {
+         piecesCollectionView.layoutIfNeeded()
+        return CGSize(width: UIView.noIntrinsicMetric, height: piecesCollectionView.contentSize.height)
+     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -129,6 +155,9 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
         //        UserDefaults.standard.set(storyBoard, forKey: "storyBoard") // save to user defaults
         //UserDefaults.standard.set(newViewController, forKey: "newViewController")
         //view.addInteraction(UIDropInteraction(delegate: self))
+        //let heightRes = piecesCollectionView.collectionViewLayout.collectionViewContentSize.height
+//        piecesCollectionView.setNeedsLayout()
+//        piecesCollectionView.layoutIfNeeded()
     }
     
     // MARK:- Helper Functions
@@ -155,6 +184,8 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
     @objc private func handleSwipe(_ sender: UISwipeGestureRecognizer) {
         if sender.direction == UISwipeGestureRecognizer.Direction.up {
             if let view = sender.view as? UIImageView {
+                //if sender is not a blank cell
+                if (view != blankImage) {
                 numMoves+=1
                 updateNumMoves(numMoves: numMoves)
                 puzzle.boardImages.remove(at: view.tag)
@@ -169,6 +200,7 @@ class PlayfieldViewController: UIViewController, UICollectionViewDelegate {
                 piecesCollectionView.reloadData()
                 try? UserDefaults.standard.set(images: puzzle.boardImages, forKey: "boardImages")
                 //UserDefaults.standard.set(image: creation.image, forKey: "creation")
+                }
             }
             
         }
