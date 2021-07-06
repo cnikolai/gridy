@@ -179,15 +179,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="OJw-ko-Y9g">
-                                <rect key="frame" x="82" y="284" width="250" height="328"/>
+                                <rect key="frame" x="82" y="306.66666666666669" width="250" height="283.00000000000006"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hE5-Kv-aog">
                                         <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="250" id="QSO-hT-lHh"/>
+                                            <constraint firstAttribute="width" constant="250" id="bPi-xb-t65"/>
+                                        </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AhE-VY-UDA">
-                                        <rect key="frame" x="105.66666666666666" y="258" width="39" height="70"/>
+                                        <rect key="frame" x="87.666666666666657" y="257.99999999999994" width="75" height="25"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="70" id="fQF-kk-rO2"/>
+                                            <constraint firstAttribute="width" constant="75" id="S8h-Dy-hb6"/>
+                                            <constraint firstAttribute="height" constant="25" id="fQF-kk-rO2"/>
                                         </constraints>
                                         <state key="normal" title="Close"/>
                                         <connections>
@@ -197,7 +202,6 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="hE5-Kv-aog" firstAttribute="centerX" secondItem="OJw-ko-Y9g" secondAttribute="centerX" id="IEg-s5-z9Z"/>
-                                    <constraint firstItem="AhE-VY-UDA" firstAttribute="leading" secondItem="OJw-ko-Y9g" secondAttribute="leading" constant="105.5" id="mhy-GM-QmF"/>
                                     <constraint firstItem="hE5-Kv-aog" firstAttribute="centerX" secondItem="OJw-ko-Y9g" secondAttribute="centerX" id="yn7-rd-g6N"/>
                                 </constraints>
                             </stackView>
@@ -205,7 +209,6 @@
                         <viewLayoutGuide key="safeArea" id="K7j-y3-YKj"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="OJw-ko-Y9g" firstAttribute="top" secondItem="K7j-y3-YKj" secondAttribute="top" constant="240" id="96r-uD-GpC"/>
                             <constraint firstItem="OJw-ko-Y9g" firstAttribute="centerX" secondItem="Dl0-An-ecV" secondAttribute="centerX" id="Mug-tL-V3W"/>
                             <constraint firstItem="OJw-ko-Y9g" firstAttribute="centerY" secondItem="Dl0-An-ecV" secondAttribute="centerY" id="uhg-JK-VR0"/>
                         </constraints>
